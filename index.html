@@ -320,76 +320,133 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
 </section>
 
 <!-- ═══ WORK ═══ -->
-<div class="grid">
+<section id="work">
+  <div class="section-header reveal">
+    <span class="section-label">// Portfolio</span>
+    <h2 class="section-title">Odabrani Radovi</h2>
+    <div class="section-divider"></div>
+  </div>
 
-    <div class="card reveal" data-cat="event" data-title="Drito iz Arene" data-tag="// Event Poster" data-img="DRITOIZARENEV1.webp" onclick="openLB(this)">
-      <img class="card-bg card-img" src="DRITOIZARENEV1.webp" alt="Drito iz Arene">
-      <div class="card-overlay">
-        <div class="card-tag">// Event Poster</div>
-        <div class="card-title">Drito iz Arene</div>
-        <div class="card-arrow">→</div>
-      </div>
+  <style>
+    .lb-nav-names {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 15px;
+    }
+    .nav-name {
+      color: #666;
+      cursor: pointer;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.3s;
+      padding: 5px 10px;
+    }
+    .nav-name:hover { color: #fff; }
+    .nav-name.active { 
+      color: #fff; 
+      font-weight: bold;
+      border-bottom: 2px solid #fff;
+    }
+    .lightbox-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
+    #lightbox-img { max-height: 75vh; width: auto; border-radius: 4px; }
+  </style>
+
+  <div class="grid">
+    <div class="card reveal" data-img="DRITOIZARENEV1.webp" data-names="Drito iz Arene" onclick="pustiGaleriju(this)">
+      <img class="card-bg" src="DRITOIZARENEV1.webp">
+      <div class="card-overlay"><div class="card-title">Drito iz Arene</div></div>
     </div>
 
-    <div class="card reveal" data-cat="cover" data-title="Chrome Hearts" data-tag="// Cover Art" data-img="Grim_chromehearts.webp" onclick="openLB(this)">
-      <img class="card-bg card-img" src="Grim_chromehearts.webp" alt="Chrome Hearts">
+    <div class="card reveal" data-img="jacv1.webp,99v1.webp,MAVID.webp,lokki.webp" data-names="JAC,Ruda 99,MAVID,Lokki" onclick="pustiGaleriju(this)">
+      <img class="card-bg" src="jacv1.webp">
       <div class="card-overlay">
-        <div class="card-tag">// Cover Art</div>
-        <div class="card-title">Chrome Hearts</div>
-        <div class="card-arrow">→</div>
-      </div>
-    </div>
-
-    <div class="card reveal" data-cat="brand" data-title="SBL Series" data-tag="// Fan Poster Series" data-img="99v1.webp,jacv1.webp,MAVID.webp,lokki.webp" onclick="openLB(this)">
-      <img class="card-bg card-img" src="jacv1.webp" alt="SBL Series">
-      <div class="card-overlay">
-        <div class="card-tag">// 4 Posters</div>
+        <div class="card-tag">// 4 Postera</div>
         <div class="card-title">SBL Series</div>
-        <div class="card-arrow">→</div>
       </div>
     </div>
 
-    <div class="card reveal" data-cat="brand" data-title="Luzeri Series" data-tag="// Fan Poster Series" data-img="dipsiv1.webp,gocav1.webp,NIKOLAV1.webp" onclick="openLB(this)">
-      <img class="card-bg card-img" src="gocav1.webp" alt="Luzeri Series">
+    <div class="card reveal" data-img="gocav1.webp,dipsiv1.webp,NIKOLAV1.webp" data-names="Goca,Dipsi,Nikola" onclick="pustiGaleriju(this)">
+      <img class="card-bg" src="gocav1.webp">
       <div class="card-overlay">
-        <div class="card-tag">// 3 Posters</div>
+        <div class="card-tag">// 3 Postera</div>
         <div class="card-title">Luzeri Series</div>
-        <div class="card-arrow">→</div>
       </div>
     </div>
 
-    <div class="card reveal" data-cat="poster" data-title="¥UNG BUD€" data-tag="// Artist Poster" data-img="BUDEYlogo.webp" onclick="openLB(this)">
-      <img class="card-bg card-img" src="BUDEYlogo.webp" alt="¥UNG BUD€">
-      <div class="card-overlay">
-        <div class="card-tag">// Artist Poster</div>
-        <div class="card-title">¥UNG BUD€</div>
-        <div class="card-arrow">→</div>
-      </div>
+    <div class="card reveal" data-img="BUDEYlogo.webp" data-names="Yung Bude" onclick="pustiGaleriju(this)">
+      <img class="card-bg" src="BUDEYlogo.webp">
+      <div class="card-overlay"><div class="card-title">¥UNG BUD€</div></div>
     </div>
 
-    <div class="card reveal" data-cat="poster" data-title="Špiro" data-tag="// Artist Poster" data-img="SPIROv2.webp" onclick="openLB(this)">
-      <img class="card-bg card-img" src="SPIROv2.webp" alt="Špiro">
-      <div class="card-overlay">
-        <div class="card-tag">// Artist Poster</div>
-        <div class="card-title">Špiro</div>
-        <div class="card-arrow">→</div>
-      </div>
+    <div class="card reveal" data-img="SPIROv2.webp" data-names="Špiro" onclick="pustiGaleriju(this)">
+      <img class="card-bg" src="SPIROv2.webp">
+      <div class="card-overlay"><div class="card-title">Špiro</div></div>
     </div>
 
-    <div class="card reveal" data-cat="poster" data-title="Popke" data-tag="// Artist Poster" data-img="popkev1.webp" onclick="openLB(this)">
-      <img class="card-bg card-img" src="popkev1.webp" alt="Popke">
-      <div class="card-overlay">
-        <div class="card-tag">// Artist Poster</div>
-        <div class="card-title">Popke</div>
-        <div class="card-arrow">→</div>
-      </div>
+    <div class="card reveal" data-img="popkev1.webp" data-names="Popke" onclick="pustiGaleriju(this)">
+      <img class="card-bg" src="popkev1.webp">
+      <div class="card-overlay"><div class="card-title">Popke</div></div>
     </div>
 
-    <div class="card reveal" data-cat="poster" data-title="Doktorukući" data-tag="// Artist Poster" data-img="doktorukuciv2.webp" onclick="openLB(this)">
-      <img class="card-bg card-img" src="doktorukuciv2.webp" alt="Doktorukući">
-      <div class="card-overlay">
-        <div class="card-tag">// Artist Poster</div>
-        <div class
+    <div class="card reveal" data-img="doktorukuciv2.webp" data-names="Doktorukući" onclick="pustiGaleriju(this)">
+      <img class="card-bg" src="doktorukuciv2.webp">
+      <div class="card-overlay"><div class="card-title">Doktorukući</div></div>
+    </div>
+
+    <div class="card reveal" data-img="Grim_chromehearts.webp" data-names="Chrome Hearts" onclick="pustiGaleriju(this)">
+      <img class="card-bg" src="Grim_chromehearts.webp">
+      <div class="card-overlay"><div class="card-title">Chrome Hearts</div></div>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox" onclick="if(event.target == this) this.style.display='none'">
+    <span class="close-lb" onclick="document.getElementById('lightbox').style.display='none'">&times;</span>
+    <div class="lightbox-content">
+       <img id="lightbox-img" src="">
+       <div id="lb-nav-names" class="lb-nav-names"></div>
+    </div>
+  </div>
+
+  <script>
+    let slikeNiz = [];
+    let imenaNiz = [];
+    let indexSada = 0;
+
+    function pustiGaleriju(el) {
+      slikeNiz = el.getAttribute('data-img').split(',');
+      imenaNiz = el.getAttribute('data-names').split(',');
+      indexSada = 0;
+      osvjeziPrikaz();
+      document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    function osvjeziPrikaz() {
+      const img = document.getElementById('lightbox-img');
+      const nav = document.getElementById('lb-nav-names');
+      
+      img.src = slikeNiz[indexSada];
+      nav.innerHTML = '';
+
+      if (slikeNiz.length > 1) {
+        imenaNiz.forEach((ime, i) => {
+          const s = document.createElement('span');
+          s.innerText = ime;
+          s.className = (i === indexSada) ? 'nav-name active' : 'nav-name';
+          s.onclick = (e) => {
+            indexSada = i;
+            osvjeziPrikaz();
+          };
+          nav.appendChild(s);
+        });
+      }
+    }
+  </script>
+</section>
 <!-- ═══ SERVICES ═══ -->
 <section id="services">
   <div class="section-header reveal">
