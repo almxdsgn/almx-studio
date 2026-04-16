@@ -328,42 +328,44 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </div>
 
   <style>
+    /* Stilovi za navigaciju unutar lightboxa */
     .lb-nav-names {
-      margin-top: 25px;
+      margin-top: 20px;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
       flex-wrap: wrap;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 15px;
+      padding: 10px;
     }
     .nav-name {
-      color: #666;
+      color: #777;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 1px;
       transition: 0.3s;
       padding: 5px 10px;
+      border: 1px solid transparent;
     }
     .nav-name:hover { color: #fff; }
     .nav-name.active { 
       color: #fff; 
-      font-weight: bold;
-      border-bottom: 2px solid #fff;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.1);
     }
-    .lightbox-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
-    #lightbox-img { max-height: 75vh; width: auto; border-radius: 4px; }
+    .lightbox-content { text-align: center; }
+    #lightbox-img { max-height: 80vh; max-width: 95%; border-radius: 5px; }
   </style>
 
   <div class="grid">
     <div class="card reveal" data-img="DRITOIZARENEV1.webp" data-names="Drito iz Arene" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="DRITOIZARENEV1.webp">
+      <img class="card-bg" src="DRITOIZARENEV1.webp" alt="Drito">
       <div class="card-overlay"><div class="card-title">Drito iz Arene</div></div>
     </div>
 
     <div class="card reveal" data-img="jacv1.webp,99v1.webp,MAVID.webp,lokki.webp" data-names="JAC,Ruda 99,MAVID,Lokki" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="jacv1.webp">
+      <img class="card-bg" src="jacv1.webp" alt="SBL">
       <div class="card-overlay">
         <div class="card-tag">// 4 Postera</div>
         <div class="card-title">SBL Series</div>
@@ -371,36 +373,36 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
     </div>
 
     <div class="card reveal" data-img="gocav1.webp,dipsiv1.webp,NIKOLAV1.webp" data-names="Goca,Dipsi,Nikola" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="gocav1.webp">
+      <img class="card-bg" src="gocav1.webp" alt="Luzeri">
       <div class="card-overlay">
         <div class="card-tag">// 3 Postera</div>
         <div class="card-title">Luzeri Series</div>
       </div>
     </div>
 
+    <div class="card reveal" data-img="Grim_chromehearts.webp" data-names="Chrome Hearts" onclick="pustiGaleriju(this)">
+      <img class="card-bg" src="Grim_chromehearts.webp" alt="Chrome">
+      <div class="card-overlay"><div class="card-title">Chrome Hearts</div></div>
+    </div>
+
     <div class="card reveal" data-img="BUDEYlogo.webp" data-names="Yung Bude" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="BUDEYlogo.webp">
+      <img class="card-bg" src="BUDEYlogo.webp" alt="Bude">
       <div class="card-overlay"><div class="card-title">¥UNG BUD€</div></div>
     </div>
 
     <div class="card reveal" data-img="SPIROv2.webp" data-names="Špiro" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="SPIROv2.webp">
+      <img class="card-bg" src="SPIROv2.webp" alt="Špiro">
       <div class="card-overlay"><div class="card-title">Špiro</div></div>
     </div>
 
     <div class="card reveal" data-img="popkev1.webp" data-names="Popke" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="popkev1.webp">
+      <img class="card-bg" src="popkev1.webp" alt="Popke">
       <div class="card-overlay"><div class="card-title">Popke</div></div>
     </div>
 
     <div class="card reveal" data-img="doktorukuciv2.webp" data-names="Doktorukući" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="doktorukuciv2.webp">
+      <img class="card-bg" src="doktorukuciv2.webp" alt="Doktor">
       <div class="card-overlay"><div class="card-title">Doktorukući</div></div>
-    </div>
-
-    <div class="card reveal" data-img="Grim_chromehearts.webp" data-names="Chrome Hearts" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="Grim_chromehearts.webp">
-      <div class="card-overlay"><div class="card-title">Chrome Hearts</div></div>
     </div>
   </div>
 
@@ -413,35 +415,37 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </div>
 
   <script>
-    let slikeNiz = [];
-    let imenaNiz = [];
-    let indexSada = 0;
+    let slikeSada = [];
+    let imenaSada = [];
+    let trenutniIdx = 0;
 
-    function pustiGaleriju(el) {
-      slikeNiz = el.getAttribute('data-img').split(',');
-      imenaNiz = el.getAttribute('data-names').split(',');
-      indexSada = 0;
-      osvjeziPrikaz();
+    function pustiGaleriju(element) {
+      slikeSada = element.getAttribute('data-img').split(',');
+      imenaSada = element.getAttribute('data-names').split(',');
+      trenutniIdx = 0;
+      updatePrikaz();
       document.getElementById('lightbox').style.display = 'flex';
     }
 
-    function osvjeziPrikaz() {
+    function updatePrikaz() {
       const img = document.getElementById('lightbox-img');
       const nav = document.getElementById('lb-nav-names');
       
-      img.src = slikeNiz[indexSada];
+      img.src = slikeSada[trenutniIdx];
       nav.innerHTML = '';
 
-      if (slikeNiz.length > 1) {
-        imenaNiz.forEach((ime, i) => {
-          const s = document.createElement('span');
-          s.innerText = ime;
-          s.className = (i === indexSada) ? 'nav-name active' : 'nav-name';
-          s.onclick = (e) => {
-            indexSada = i;
-            osvjeziPrikaz();
+      // Ako je grupa (više slika), ispiši imena ispod slike
+      if (slikeSada.length > 1) {
+        imenaSada.forEach((ime, i) => {
+          const span = document.createElement('span');
+          span.innerText = ime;
+          span.className = (i === trenutniIdx) ? 'nav-name active' : 'nav-name';
+          span.onclick = (e) => {
+            e.stopPropagation();
+            trenutniIdx = i;
+            updatePrikaz();
           };
-          nav.appendChild(s);
+          nav.appendChild(span);
         });
       }
     }
