@@ -328,138 +328,141 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </div>
 
   <style>
-    /* Stilovi za pravokutnike s imenima */
-    .lb-nav-names {
+    /* Stilovi za gumbe unutar Lightboxa */
+    .custom-nav-container {
       margin-top: 20px;
       display: flex;
       justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
     }
-    .nav-name {
+    .custom-nav-btn {
       color: #fff;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.2);
       cursor: pointer;
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
-      padding: 8px 15px;
+      padding: 10px 18px;
       transition: 0.3s;
-      border-radius: 4px; /* Mali pravokutnici */
+      border-radius: 4px;
+      letter-spacing: 1px;
     }
-    .nav-name:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .nav-name.active { 
+    .custom-nav-btn:hover { background: rgba(255, 255, 255, 0.15); }
+    .custom-nav-btn.is-active { 
       background: #fff;
       color: #000;
       font-weight: bold;
     }
-    .lightbox-content {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
+    #custom-lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999999;
+      left: 0; top: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.98);
       align-items: center;
-      width: 100%;
+      justify-content: center;
+      flex-direction: column;
     }
-    #lightbox-img { 
-      max-height: 75vh; 
-      max-width: 90%; 
+    #custom-lightbox img {
+      max-height: 70vh;
+      max-width: 90%;
       object-fit: contain;
+      border-radius: 2px;
+    }
+    .close-custom {
+      position: absolute;
+      top: 30px; right: 30px;
+      color: #fff; font-size: 40px; cursor: pointer;
     }
   </style>
 
   <div class="grid">
-    <div class="card reveal" data-img="DRITOIZARENEV1.webp" data-names="Drito iz Arene" onclick="otvoriGaleriju(this)">
-      <img class="card-bg" src="DRITOIZARENEV1.webp" alt="Drito">
-      <div class="card-overlay"><div class="card-title">Drito iz Arene</div></div>
-    </div>
-
-    <div class="card reveal" data-img="jacv1.webp,99v1.webp,MAVID.webp,lokki.webp" data-names="JAC,Ruda 99,MAVID,Lokki" onclick="otvoriGaleriju(this)">
-      <img class="card-bg" src="jacv1.webp" alt="SBL">
+    <div class="card reveal" data-gallery="jacv1.webp,99v1.webp,MAVID.webp,lokki.webp" data-names="JAC,Ruda 99,MAVID,Lokki" onclick="pokreniGaleriju(this)">
+      <img class="card-bg" src="jacv1.webp">
       <div class="card-overlay">
         <div class="card-tag">// Series</div>
         <div class="card-title">SBL Series</div>
+        <div class="card-arrow">→</div>
       </div>
     </div>
 
-    <div class="card reveal" data-img="gocav1.webp,dipsiv1.webp,NIKOLAV1.webp" data-names="Goca,Dipsi,Nikola" onclick="otvoriGaleriju(this)">
-      <img class="card-bg" src="gocav1.webp" alt="Luzeri">
+    <div class="card reveal" data-gallery="gocav1.webp,dipsiv1.webp,NIKOLAV1.webp" data-names="Goca,Dipsi,Nikola" onclick="pokreniGaleriju(this)">
+      <img class="card-bg" src="gocav1.webp">
       <div class="card-overlay">
         <div class="card-tag">// Series</div>
         <div class="card-title">Luzeri Series</div>
+        <div class="card-arrow">→</div>
       </div>
     </div>
 
-    <div class="card reveal" data-img="Grim_chromehearts.webp" data-names="Chrome Hearts" onclick="otvoriGaleriju(this)">
-      <img class="card-bg" src="Grim_chromehearts.webp">
-      <div class="card-overlay"><div class="card-title">Chrome Hearts</div></div>
+    <div class="card reveal" data-gallery="DRITOIZARENEV1.webp" data-names="Drito iz Arene" onclick="pokreniGaleriju(this)">
+      <img class="card-bg" src="DRITOIZARENEV1.webp">
+      <div class="card-overlay"><div class="card-title">Drito iz Arene</div></div>
     </div>
 
-    <div class="card reveal" data-img="BUDEYlogo.webp" data-names="Yung Bude" onclick="otvoriGaleriju(this)">
-      <img class="card-bg" src="BUDEYlogo.webp">
-      <div class="card-overlay"><div class="card-title">¥UNG BUD€</div></div>
-    </div>
-
-    <div class="card reveal" data-img="SPIROv2.webp" data-names="Špiro" onclick="otvoriGaleriju(this)">
+    <div class="card reveal" data-gallery="SPIROv2.webp" data-names="Špiro" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="SPIROv2.webp">
       <div class="card-overlay"><div class="card-title">Špiro</div></div>
     </div>
 
-    <div class="card reveal" data-img="popkev1.webp" data-names="Popke" onclick="otvoriGaleriju(this)">
+    <div class="card reveal" data-gallery="popkev1.webp" data-names="Popke" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="popkev1.webp">
       <div class="card-overlay"><div class="card-title">Popke</div></div>
     </div>
 
-    <div class="card reveal" data-img="doktorukuciv2.webp" data-names="Doktorukući" onclick="otvoriGaleriju(this)">
+    <div class="card reveal" data-gallery="doktorukuciv2.webp" data-names="Doktorukući" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="doktorukuciv2.webp">
       <div class="card-overlay"><div class="card-title">Doktorukući</div></div>
     </div>
   </div>
 
-  <div id="lightbox" class="lightbox" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.9); align-items:center; justify-content:center;" onclick="if(event.target == this) this.style.display='none'">
-    <span class="close-lb" style="position:absolute; top:20px; right:30px; color:#fff; font-size:40px; cursor:pointer;" onclick="document.getElementById('lightbox').style.display='none'">&times;</span>
-    <div class="lightbox-content">
-       <img id="lightbox-img" src="">
-       <div id="lb-nav-names" class="lb-nav-names"></div>
-    </div>
+  <div id="custom-lightbox" onclick="if(event.target == this) zatvoriGaleriju()">
+    <span class="close-custom" onclick="zatvoriGaleriju()">&times;</span>
+    <img id="custom-lightbox-img" src="">
+    <div id="custom-nav-names" class="custom-nav-container"></div>
   </div>
 
   <script>
-    let galerijaSlike = [];
-    let galerijaImena = [];
-    let aktivniIndex = 0;
+    let aktivneSlike = [];
+    let aktivnaImena = [];
+    let trenutniIndexSlike = 0;
 
-    function otvoriGaleriju(kartica) {
-      galerijaSlike = kartica.getAttribute('data-img').split(',');
-      galerijaImena = kartica.getAttribute('data-names').split(',');
-      aktivniIndex = 0;
-      osvjeziLightbox();
-      document.getElementById('lightbox').style.display = 'flex';
+    function pokreniGaleriju(kartica) {
+      aktivneSlike = kartica.getAttribute('data-gallery').split(',');
+      aktivnaImena = kartica.getAttribute('data-names').split(',');
+      trenutniIndexSlike = 0;
+      
+      osvjeziPrikazGalerije();
+      document.getElementById('custom-lightbox').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
 
-    function osvjeziLightbox() {
-      const img = document.getElementById('lightbox-img');
-      const navContainer = document.getElementById('lb-nav-names');
+    function osvjeziPrikazGalerije() {
+      const imgElement = document.getElementById('custom-lightbox-img');
+      const navElement = document.getElementById('custom-nav-names');
       
-      // Postavi sliku
-      img.src = galerijaSlike[aktivniIndex];
-      
-      // Očisti gumbe i napravi nove
-      navContainer.innerHTML = '';
-      if (galerijaSlike.length > 1) {
-        galerijaImena.forEach((ime, i) => {
+      imgElement.src = aktivneSlike[trenutniIndexSlike];
+      navElement.innerHTML = '';
+
+      if (aktivneSlike.length > 1) {
+        aktivnaImena.forEach((ime, i) => {
           const btn = document.createElement('div');
           btn.innerText = ime;
-          btn.className = (i === aktivniIndex) ? 'nav-name active' : 'nav-name';
+          btn.className = (i === trenutniIndexSlike) ? 'custom-nav-btn is-active' : 'custom-nav-btn';
           btn.onclick = (e) => {
             e.stopPropagation();
-            aktivniIndex = i;
-            osvjeziLightbox();
+            trenutniIndexSlike = i;
+            osvjeziPrikazGalerije();
           };
-          navContainer.appendChild(btn);
+          navElement.appendChild(btn);
         });
       }
+    }
+
+    function zatvoriGaleriju() {
+      document.getElementById('custom-lightbox').style.display = 'none';
+      document.body.style.overflow = 'auto';
     }
   </script>
 </section>
@@ -626,27 +629,6 @@ window.addEventListener('scroll', () => {
     : 'linear-gradient(to bottom, rgba(10,10,10,.95) 0%, transparent 100%)';
 });
 
-/* ── LIGHTBOX ── */
-function openLB(card) {
-  const lb    = document.getElementById('lightbox');
-  const title = document.getElementById('lbTitle');
-  const cat   = document.getElementById('lbCat');
-  const cont  = document.getElementById('lbContent');
-  title.textContent = card.dataset.title;
-  cat.textContent   = card.dataset.tag;
-  const imgSrc = card.dataset.img;
-  if (imgSrc) {
-    cont.innerHTML = `<img src="${imgSrc}" alt="${card.dataset.title}" style="width:100%;height:100%;object-fit:cover;">`;
-  } else {
-    cont.innerHTML = `<span style="font-family:var(--font-old);font-size:3.5rem;color:rgba(138,3,3,.25);text-align:center;padding:20px">${card.dataset.title}</span>`;
-  }
-  lb.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-document.getElementById('lbClose').addEventListener('click', closeLB);
-document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) closeLB(); });
-function closeLB() { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
 
 /* ── SMOOTH SCROLL ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
