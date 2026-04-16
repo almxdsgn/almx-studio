@@ -328,86 +328,97 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </div>
 
   <style>
-    /* Stilovi za navigaciju unutar lightboxa */
+    /* Stilovi za pravokutnike s imenima */
     .lb-nav-names {
       margin-top: 20px;
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 10px;
       flex-wrap: wrap;
-      padding: 10px;
     }
     .nav-name {
-      color: #777;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       cursor: pointer;
-      font-size: 14px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      padding: 8px 15px;
       transition: 0.3s;
-      padding: 5px 10px;
-      border: 1px solid transparent;
+      border-radius: 4px; /* Mali pravokutnici */
     }
-    .nav-name:hover { color: #fff; }
+    .nav-name:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
     .nav-name.active { 
-      color: #fff; 
-      border: 1px solid #fff;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.1);
+      background: #fff;
+      color: #000;
+      font-weight: bold;
     }
-    .lightbox-content { text-align: center; }
-    #lightbox-img { max-height: 80vh; max-width: 95%; border-radius: 5px; }
+    .lightbox-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    #lightbox-img { 
+      max-height: 75vh; 
+      max-width: 90%; 
+      object-fit: contain;
+    }
   </style>
 
   <div class="grid">
-    <div class="card reveal" data-img="DRITOIZARENEV1.webp" data-names="Drito iz Arene" onclick="pustiGaleriju(this)">
+    <div class="card reveal" data-img="DRITOIZARENEV1.webp" data-names="Drito iz Arene" onclick="otvoriGaleriju(this)">
       <img class="card-bg" src="DRITOIZARENEV1.webp" alt="Drito">
       <div class="card-overlay"><div class="card-title">Drito iz Arene</div></div>
     </div>
 
-    <div class="card reveal" data-img="jacv1.webp,99v1.webp,MAVID.webp,lokki.webp" data-names="JAC,Ruda 99,MAVID,Lokki" onclick="pustiGaleriju(this)">
+    <div class="card reveal" data-img="jacv1.webp,99v1.webp,MAVID.webp,lokki.webp" data-names="JAC,Ruda 99,MAVID,Lokki" onclick="otvoriGaleriju(this)">
       <img class="card-bg" src="jacv1.webp" alt="SBL">
       <div class="card-overlay">
-        <div class="card-tag">// 4 Postera</div>
+        <div class="card-tag">// Series</div>
         <div class="card-title">SBL Series</div>
       </div>
     </div>
 
-    <div class="card reveal" data-img="gocav1.webp,dipsiv1.webp,NIKOLAV1.webp" data-names="Goca,Dipsi,Nikola" onclick="pustiGaleriju(this)">
+    <div class="card reveal" data-img="gocav1.webp,dipsiv1.webp,NIKOLAV1.webp" data-names="Goca,Dipsi,Nikola" onclick="otvoriGaleriju(this)">
       <img class="card-bg" src="gocav1.webp" alt="Luzeri">
       <div class="card-overlay">
-        <div class="card-tag">// 3 Postera</div>
+        <div class="card-tag">// Series</div>
         <div class="card-title">Luzeri Series</div>
       </div>
     </div>
 
-    <div class="card reveal" data-img="Grim_chromehearts.webp" data-names="Chrome Hearts" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="Grim_chromehearts.webp" alt="Chrome">
+    <div class="card reveal" data-img="Grim_chromehearts.webp" data-names="Chrome Hearts" onclick="otvoriGaleriju(this)">
+      <img class="card-bg" src="Grim_chromehearts.webp">
       <div class="card-overlay"><div class="card-title">Chrome Hearts</div></div>
     </div>
 
-    <div class="card reveal" data-img="BUDEYlogo.webp" data-names="Yung Bude" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="BUDEYlogo.webp" alt="Bude">
+    <div class="card reveal" data-img="BUDEYlogo.webp" data-names="Yung Bude" onclick="otvoriGaleriju(this)">
+      <img class="card-bg" src="BUDEYlogo.webp">
       <div class="card-overlay"><div class="card-title">¥UNG BUD€</div></div>
     </div>
 
-    <div class="card reveal" data-img="SPIROv2.webp" data-names="Špiro" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="SPIROv2.webp" alt="Špiro">
+    <div class="card reveal" data-img="SPIROv2.webp" data-names="Špiro" onclick="otvoriGaleriju(this)">
+      <img class="card-bg" src="SPIROv2.webp">
       <div class="card-overlay"><div class="card-title">Špiro</div></div>
     </div>
 
-    <div class="card reveal" data-img="popkev1.webp" data-names="Popke" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="popkev1.webp" alt="Popke">
+    <div class="card reveal" data-img="popkev1.webp" data-names="Popke" onclick="otvoriGaleriju(this)">
+      <img class="card-bg" src="popkev1.webp">
       <div class="card-overlay"><div class="card-title">Popke</div></div>
     </div>
 
-    <div class="card reveal" data-img="doktorukuciv2.webp" data-names="Doktorukući" onclick="pustiGaleriju(this)">
-      <img class="card-bg" src="doktorukuciv2.webp" alt="Doktor">
+    <div class="card reveal" data-img="doktorukuciv2.webp" data-names="Doktorukući" onclick="otvoriGaleriju(this)">
+      <img class="card-bg" src="doktorukuciv2.webp">
       <div class="card-overlay"><div class="card-title">Doktorukući</div></div>
     </div>
   </div>
 
-  <div id="lightbox" class="lightbox" onclick="if(event.target == this) this.style.display='none'">
-    <span class="close-lb" onclick="document.getElementById('lightbox').style.display='none'">&times;</span>
+  <div id="lightbox" class="lightbox" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.9); align-items:center; justify-content:center;" onclick="if(event.target == this) this.style.display='none'">
+    <span class="close-lb" style="position:absolute; top:20px; right:30px; color:#fff; font-size:40px; cursor:pointer;" onclick="document.getElementById('lightbox').style.display='none'">&times;</span>
     <div class="lightbox-content">
        <img id="lightbox-img" src="">
        <div id="lb-nav-names" class="lb-nav-names"></div>
@@ -415,83 +426,43 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </div>
 
   <script>
-    let slikeSada = [];
-    let imenaSada = [];
-    let trenutniIdx = 0;
+    let galerijaSlike = [];
+    let galerijaImena = [];
+    let aktivniIndex = 0;
 
-    function pustiGaleriju(element) {
-      slikeSada = element.getAttribute('data-img').split(',');
-      imenaSada = element.getAttribute('data-names').split(',');
-      trenutniIdx = 0;
-      updatePrikaz();
+    function otvoriGaleriju(kartica) {
+      galerijaSlike = kartica.getAttribute('data-img').split(',');
+      galerijaImena = kartica.getAttribute('data-names').split(',');
+      aktivniIndex = 0;
+      osvjeziLightbox();
       document.getElementById('lightbox').style.display = 'flex';
     }
 
-    function updatePrikaz() {
+    function osvjeziLightbox() {
       const img = document.getElementById('lightbox-img');
-      const nav = document.getElementById('lb-nav-names');
+      const navContainer = document.getElementById('lb-nav-names');
       
-      img.src = slikeSada[trenutniIdx];
-      nav.innerHTML = '';
-
-      // Ako je grupa (više slika), ispiši imena ispod slike
-      if (slikeSada.length > 1) {
-        imenaSada.forEach((ime, i) => {
-          const span = document.createElement('span');
-          span.innerText = ime;
-          span.className = (i === trenutniIdx) ? 'nav-name active' : 'nav-name';
-          span.onclick = (e) => {
+      // Postavi sliku
+      img.src = galerijaSlike[aktivniIndex];
+      
+      // Očisti gumbe i napravi nove
+      navContainer.innerHTML = '';
+      if (galerijaSlike.length > 1) {
+        galerijaImena.forEach((ime, i) => {
+          const btn = document.createElement('div');
+          btn.innerText = ime;
+          btn.className = (i === aktivniIndex) ? 'nav-name active' : 'nav-name';
+          btn.onclick = (e) => {
             e.stopPropagation();
-            trenutniIdx = i;
-            updatePrikaz();
+            aktivniIndex = i;
+            osvjeziLightbox();
           };
-          nav.appendChild(span);
+          navContainer.appendChild(btn);
         });
       }
     }
   </script>
 </section>
-<!-- ═══ SERVICES ═══ -->
-<section id="services">
-  <div class="section-header reveal">
-    <span class="section-label">// <span data-i18n="services_label">Što radim</span></span>
-    <h2 class="section-title" data-i18n="services_title">Usluge</h2>
-    <div class="section-divider"></div>
-  </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <span class="service-icon">◈</span>
-      <div class="service-name" data-i18n="s1_name">Event Posteri</div>
-      <p class="service-desc" data-i18n="s1_desc">Kompletan vizualni identitet za nastupe, koncerte i evente. Jake kompozicije koje zaustave scroll.</p>
-      <span class="service-corner">//01</span>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.1s">
-      <span class="service-icon">◉</span>
-      <div class="service-name" data-i18n="s2_name">Cover Art za Singlove &amp; EP-ove</div>
-      <p class="service-desc" data-i18n="s2_desc">Cover art koji prati energiju traka. Konzistentan vizualni identitet kroz cijeli projekt.</p>
-      <span class="service-corner">//02</span>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.2s">
-      <span class="service-icon">⬡</span>
-      <div class="service-name" data-i18n="s3_name">Artist Branding</div>
-      <p class="service-desc" data-i18n="s3_desc">Vizualni sustavi za artiste — boje, tipografija i motivi koji te čine prepoznatljivim.</p>
-      <span class="service-corner">//03</span>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.3s">
-      <span class="service-icon">◇</span>
-      <div class="service-name" data-i18n="s4_name">Foto Editing</div>
-      <p class="service-desc" data-i18n="s4_desc">Tamni duotone gradevi, halftone teksture, cutout kompoziting. Raw shotovi koji udaraju drugačije.</p>
-      <span class="service-corner">//04</span>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.4s">
-      <span class="service-icon">▣</span>
-      <div class="service-name" data-i18n="s5_name">Countdown Series</div>
-      <p class="service-desc" data-i18n="s5_desc">Konzistentne pre-release vizualne kampanje za storyje i postove — hype na pravi način.</p>
-      <span class="service-corner">//05</span>
-    </div>
-  </div>
-</section>
-
 <!-- ═══ CONTACT ═══ -->
 <section id="contact">
   <div class="contact-inner">
