@@ -29,6 +29,12 @@
 html { scroll-behavior: smooth; overflow-x: hidden; }
 body { background: var(--black); color: var(--white); font-family: var(--font-body); overflow-x: hidden; cursor: none; }
 
+/* ── ZAŠTITA SLIKA ── */
+img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
+* { -webkit-user-select: none; user-select: none; }
+.card, .card * { pointer-events: auto; }
+.card img { pointer-events: none; }
+
 .cursor { position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none; mix-blend-mode: difference; }
 .cursor-dot { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; position: absolute; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
 .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(0,212,255,.4); border-radius: 50%; position: absolute; transform: translate(-50%,-50%); transition: all .12s ease; }
@@ -113,12 +119,11 @@ section { position: relative; z-index: 1; }
 #work::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; }
 .card { position: relative; overflow: hidden; aspect-ratio: 3/4; background: var(--grey2); cursor: none; }
-.card-img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease, filter .4s; filter: saturate(.8) contrast(1.1); }
-.card-bg { width: 100%; height: 100%; position: absolute; inset: 0; transition: transform .6s ease; }
+.card-bg { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; transition: transform .6s ease; }
 .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,.97) 0%, rgba(138,3,3,.15) 40%, transparent 70%); opacity: 0; transition: opacity .4s; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px; }
 .card:hover .card-overlay { opacity: 1; }
 .card:hover .card-bg { transform: scale(1.06); }
-.card-glow { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(0,212,255,0); transition: box-shadow .4s; }
+.card-glow { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(0,212,255,0); transition: box-shadow .4s; pointer-events: none; }
 .card:hover .card-glow { box-shadow: inset 0 0 0 1px rgba(0,212,255,.3), 0 0 30px rgba(0,212,255,.08); }
 .card-tag { font-family: var(--font-tag); font-size: .75rem; color: var(--cyan); margin-bottom: 8px; transform: translateY(10px); transition: transform .4s .05s; opacity: 0; }
 .card:hover .card-tag { transform: translateY(0); opacity: 1; }
@@ -126,13 +131,6 @@ section { position: relative; z-index: 1; }
 .card:hover .card-title { transform: translateY(0); opacity: 1; }
 .card-arrow { width: 32px; height: 32px; margin-top: 14px; border: 1px solid rgba(0,212,255,.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .8rem; color: var(--cyan); transform: translateY(14px); transition: transform .4s .15s; opacity: 0; }
 .card:hover .card-arrow { transform: translateY(0); opacity: 1; }
-.card[data-cat="cover"]  .card-bg { background: linear-gradient(135deg, #0d0505 0%, #1a0a0a 100%); }
-.card[data-cat="poster"] .card-bg { background: linear-gradient(135deg, #050a12 0%, #0a1520 100%); }
-.card[data-cat="event"]  .card-bg { background: linear-gradient(135deg, #08050d 0%, #110a18 100%); }
-.card[data-cat="brand"]  .card-bg { background: linear-gradient(135deg, #05080d 0%, #0a1015 100%); }
-.card-art { width: 100%; height: 100%; position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: var(--font-old); font-size: 2.5rem; color: rgba(240,236,228,.06); text-align: center; padding: 20px; transition: transform .6s ease; }
-.card:hover .card-art { transform: scale(1.06); }
-.card-art .sub { font-family: var(--font-tag); font-size: .8rem; color: rgba(0,212,255,.15); margin-top: 10px; }
 .card::after { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 8px 8px; opacity: 0; transition: opacity .4s; }
 .card:hover::after { opacity: 1; }
 
@@ -209,15 +207,56 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
 .reveal-right.visible { opacity: 1; transform: translateX(0); }
 
 /* ── LIGHTBOX ── */
-.lb-overlay { position: fixed; inset: 0; z-index: 9000; background: rgba(10,10,10,.96); display: none; align-items: center; justify-content: center; padding: 60px; }
-.lb-overlay.active { display: flex; }
-.lb-inner { max-width: 800px; width: 100%; position: relative; }
-.lb-content { width: 100%; aspect-ratio: 3/4; background: var(--grey2); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(138,3,3,.3); overflow: hidden; }
-.lb-content img { width: 100%; height: 100%; object-fit: cover; }
-.lb-title { margin-top: 20px; font-family: var(--font-ui); font-size: 1.5rem; font-weight: 700; letter-spacing: 2px; }
-.lb-cat { font-family: var(--font-tag); font-size: .85rem; color: var(--cyan); margin-top: 6px; }
-.lb-close { position: fixed; top: 28px; right: 36px; font-family: var(--font-ui); font-size: 1.5rem; color: rgba(240,236,228,.5); cursor: none; background: none; border: none; transition: color .3s; }
-.lb-close:hover { color: var(--red2); }
+#custom-lightbox {
+  display: none;
+  position: fixed;
+  z-index: 999999;
+  left: 0; top: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.98);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#custom-lightbox img {
+  max-height: 70vh;
+  max-width: 90%;
+  object-fit: contain;
+  border-radius: 2px;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+.close-custom {
+  position: absolute;
+  top: 30px; right: 30px;
+  color: #fff; font-size: 40px; cursor: pointer;
+  line-height: 1; pointer-events: auto;
+}
+.custom-nav-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.custom-nav-btn {
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  transition: 0.3s;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  pointer-events: auto;
+}
+.custom-nav-btn:hover { background: rgba(255,255,255,0.15); }
+.custom-nav-btn.is-active {
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+}
 
 /* ── MOBILE NAV ── */
 .mobile-menu { display: none; position: fixed; inset: 0; z-index: 998; background: rgba(10,10,10,.98); flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
@@ -238,7 +277,6 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
 }
 @media (max-width: 600px) {
   .grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .lb-overlay { padding: 24px; }
 }
 </style>
 </head>
@@ -248,16 +286,6 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
 <div class="cursor" id="cursor">
   <div class="cursor-ring" id="cursorRing"></div>
   <div class="cursor-dot" id="cursorDot"></div>
-</div>
-
-<!-- LIGHTBOX -->
-<div class="lb-overlay" id="lightbox">
-  <div class="lb-inner">
-    <div class="lb-content" id="lbContent"></div>
-    <div class="lb-title" id="lbTitle"></div>
-    <div class="lb-cat" id="lbCat"></div>
-  </div>
-  <button class="lb-close" id="lbClose">✕</button>
 </div>
 
 <!-- MOBILE MENU -->
@@ -320,72 +348,22 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
 </section>
 
 <!-- ═══ WORK ═══ -->
-<!-- ═══ WORK ═══ -->
 <section id="work">
   <div class="section-header reveal">
     <span class="section-label">// Portfolio</span>
-    <h2 class="section-title">Odabrani Radovi</h2>
+    <h2 class="section-title" data-i18n="work_title">Odabrani Radovi</h2>
     <div class="section-divider"></div>
   </div>
 
-  <style>
-    #custom-lightbox {
-      display: none;
-      position: fixed;
-      z-index: 999999;
-      left: 0; top: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.98);
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-    #custom-lightbox img {
-      max-height: 70vh;
-      max-width: 90%;
-      object-fit: contain;
-      border-radius: 2px;
-    }
-    .close-custom {
-      position: absolute;
-      top: 30px; right: 30px;
-      color: #fff; font-size: 40px; cursor: pointer;
-      line-height: 1;
-    }
-    .custom-nav-container {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .custom-nav-btn {
-      color: #fff;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.2);
-      cursor: pointer;
-      font-size: 11px;
-      text-transform: uppercase;
-      padding: 10px 18px;
-      transition: 0.3s;
-      border-radius: 4px;
-      letter-spacing: 1px;
-    }
-    .custom-nav-btn:hover { background: rgba(255,255,255,0.15); }
-    .custom-nav-btn.is-active {
-      background: #fff;
-      color: #000;
-      font-weight: bold;
-    }
-  </style>
-
   <div class="grid">
 
-    <!-- SBL Series -->
+    <!-- SBL Series: JAC, MAVID, Lokki + Ruda 99 kad uploadaš 99v1.webp -->
     <div class="card reveal"
          data-gallery="jacv1.webp,MAVID.webp,lokki.webp"
          data-names="JAC,MAVID,Lokki"
          onclick="pokreniGaleriju(this)">
-      <img class="card-bg" src="jacv1.webp">
+      <img class="card-bg" src="jacv1.webp" alt="">
+      <div class="card-glow"></div>
       <div class="card-overlay">
         <div class="card-tag">// Series</div>
         <div class="card-title">SBL Series</div>
@@ -393,12 +371,13 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       </div>
     </div>
 
-    <!-- Luzeri Series -->
+    <!-- Luzeri Series: Goca, Dipsi + Nikola kad uploadaš NIKOLAV1.webp -->
     <div class="card reveal"
          data-gallery="gocav1.webp,dipsiv1.webp"
          data-names="Goca,Dipsi"
          onclick="pokreniGaleriju(this)">
-      <img class="card-bg" src="gocav1.webp">
+      <img class="card-bg" src="gocav1.webp" alt="">
+      <div class="card-glow"></div>
       <div class="card-overlay">
         <div class="card-tag">// Series</div>
         <div class="card-title">Luzeri Series</div>
@@ -411,7 +390,8 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
          data-gallery="DRITOIZARENEV1.webp"
          data-names="Drito iz Arene"
          onclick="pokreniGaleriju(this)">
-      <img class="card-bg" src="DRITOIZARENEV1.webp">
+      <img class="card-bg" src="DRITOIZARENEV1.webp" alt="">
+      <div class="card-glow"></div>
       <div class="card-overlay">
         <div class="card-title">Drito iz Arene</div>
       </div>
@@ -422,7 +402,8 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
          data-gallery="SPIROv2.webp"
          data-names="Špiro"
          onclick="pokreniGaleriju(this)">
-      <img class="card-bg" src="SPIROv2.webp">
+      <img class="card-bg" src="SPIROv2.webp" alt="">
+      <div class="card-glow"></div>
       <div class="card-overlay">
         <div class="card-title">Špiro</div>
       </div>
@@ -433,7 +414,8 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
          data-gallery="popkev1.webp"
          data-names="Popke"
          onclick="pokreniGaleriju(this)">
-      <img class="card-bg" src="popkev1.webp">
+      <img class="card-bg" src="popkev1.webp" alt="">
+      <div class="card-glow"></div>
       <div class="card-overlay">
         <div class="card-title">Popke</div>
       </div>
@@ -444,7 +426,8 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
          data-gallery="doktorukuciv2.webp"
          data-names="Doktorukući"
          onclick="pokreniGaleriju(this)">
-      <img class="card-bg" src="doktorukuciv2.webp">
+      <img class="card-bg" src="doktorukuciv2.webp" alt="">
+      <div class="card-glow"></div>
       <div class="card-overlay">
         <div class="card-title">Doktorukući</div>
       </div>
@@ -455,7 +438,8 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
          data-gallery="Grim_chromehearts.webp"
          data-names="Grim Chrome Hearts"
          onclick="pokreniGaleriju(this)">
-      <img class="card-bg" src="Grim_chromehearts.webp">
+      <img class="card-bg" src="Grim_chromehearts.webp" alt="">
+      <div class="card-glow"></div>
       <div class="card-overlay">
         <div class="card-title">Grim Chrome Hearts</div>
       </div>
@@ -466,7 +450,8 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
          data-gallery="BUDEYlogo.webp"
          data-names="Yung Bude"
          onclick="pokreniGaleriju(this)">
-      <img class="card-bg" src="BUDEYlogo.webp">
+      <img class="card-bg" src="BUDEYlogo.webp" alt="">
+      <div class="card-glow"></div>
       <div class="card-overlay">
         <div class="card-title">Yung Bude</div>
       </div>
@@ -481,56 +466,74 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
     <div id="custom-nav-names" class="custom-nav-container"></div>
   </div>
 
-  <script>
-    let aktivneSlike = [];
-    let aktivnaImena = [];
-    let trenutniIndex = 0;
-
-    function pokreniGaleriju(kartica) {
-      aktivneSlike = kartica.getAttribute('data-gallery').split(',');
-      aktivnaImena = kartica.getAttribute('data-names').split(',');
-      trenutniIndex = 0;
-      prikaziSliku(0);
-      document.getElementById('custom-lightbox').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function prikaziSliku(index) {
-      trenutniIndex = index;
-      document.getElementById('custom-lightbox-img').src = aktivneSlike[index];
-
-      const nav = document.getElementById('custom-nav-names');
-      nav.innerHTML = '';
-
-      if (aktivneSlike.length > 1) {
-        aktivnaImena.forEach(function(ime, i) {
-          const btn = document.createElement('button');
-          btn.innerText = ime;
-          btn.className = 'custom-nav-btn' + (i === index ? ' is-active' : '');
-          btn.onclick = function(e) {
-            e.stopPropagation();
-            prikaziSliku(i);
-          };
-          nav.appendChild(btn);
-        });
-      }
-    }
-
-    function zatvoriGaleriju() {
-      document.getElementById('custom-lightbox').style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-
-    document.addEventListener('keydown', function(e) {
-      if (document.getElementById('custom-lightbox').style.display === 'flex') {
-        if (e.key === 'Escape') zatvoriGaleriju();
-        if (e.key === 'ArrowRight') prikaziSliku((trenutniIndex + 1) % aktivneSlike.length);
-        if (e.key === 'ArrowLeft') prikaziSliku((trenutniIndex - 1 + aktivneSlike.length) % aktivneSlike.length);
-      }
-    });
-  </script>
-
 </section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-header reveal">
+      <span class="section-label" data-i18n="about_label">// O meni</span>
+      <h2 class="section-title" data-i18n="about_title">O meni</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="about-body-single reveal">
+      <p class="about-text" data-i18n="about_p1">Bavim se <strong>grafičkim dizajnom</strong> i kroz svoj rad volim izražavati kreativnost i stalno istraživati nove ideje. Smatram se komunikativnom, kreativnom i odgovornom osobom koja uvijek traži načine kako unaprijediti svoje vještine i napredovati.</p>
+      <p class="about-text" data-i18n="about_p2">Iako sam još u procesu učenja, <strong>mlada sam entuzijastica</strong> motivirana razvijati se u svim područjima dizajna i stalno raditi na sebi. Volim izazove i prilike koje mi omogućuju da naučim nešto novo i proširim svoje znanje.</p>
+      <p class="about-text" data-i18n="about_p3">U slobodno vrijeme slušam <span class="highlight">trap</span> i istražujem nove stvari koje me mogu inspirirati u radu. Moj cilj je nastaviti rasti u svijetu dizajna i educirati se u što više različitih smjerova kako bih postala što bolja u onome što radim.</p>
+      <p class="about-text" data-i18n="about_p4">Dostupna svima kojima treba jak vizualni identitet.</p>
+    </div>
+    <div class="about-tags reveal">
+      <span>Poster Design</span>
+      <span>Cover Art</span>
+      <span>Branding</span>
+      <span>Dark Aesthetic</span>
+      <span>Photo Editing</span>
+      <span>Trap / Underground</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services">
+  <div class="section-header reveal">
+    <span class="section-label" data-i18n="services_label">// Što radim</span>
+    <h2 class="section-title" data-i18n="services_title">Usluge</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">✦</span>
+      <div class="service-name" data-i18n="s1_name">Event Posteri</div>
+      <p class="service-desc" data-i18n="s1_desc">Kompletan vizualni identitet za nastupe, koncerte i evente. Jake kompozicije koje zaustave scroll.</p>
+      <span class="service-corner">01</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">◈</span>
+      <div class="service-name" data-i18n="s2_name">Cover Art za Singlove & EP-ove</div>
+      <p class="service-desc" data-i18n="s2_desc">Cover art koji prati energiju traka. Konzistentan vizualni identitet kroz cijeli projekt.</p>
+      <span class="service-corner">02</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">⬡</span>
+      <div class="service-name" data-i18n="s3_name">Artist Branding</div>
+      <p class="service-desc" data-i18n="s3_desc">Vizualni sustavi za artiste — boje, tipografija i motivi koji te čine prepoznatljivim.</p>
+      <span class="service-corner">03</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">◉</span>
+      <div class="service-name" data-i18n="s4_name">Foto Editing</div>
+      <p class="service-desc" data-i18n="s4_desc">Tamni duotone gradevi, halftone teksture, cutout kompoziting. Raw shotovi koji udaraju drugačije.</p>
+      <span class="service-corner">04</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">▲</span>
+      <div class="service-name" data-i18n="s5_name">Countdown Series</div>
+      <p class="service-desc" data-i18n="s5_desc">Konzistentne pre-release vizualne kampanje za storyje i postove — hype na pravi način.</p>
+      <span class="service-corner">05</span>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ CONTACT ═══ -->
 <section id="contact">
   <div class="contact-inner">
@@ -563,9 +566,7 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
 </footer>
 
 <script>
-/* ══════════════════════════════════════
-   TRANSLATIONS
-══════════════════════════════════════ */
+/* ══ TRANSLATIONS ══ */
 const i18n = {
   hr: {
     nav_work: "Radovi", nav_about: "O meni", nav_services: "Usluge", nav_contact: "Kontakt",
@@ -574,16 +575,17 @@ const i18n = {
     hero_cta1: "Pogledaj Radove", hero_cta2: "Kontaktiraj Me",
     scroll: "Skrolaj",
     work_title: "Odabrani Radovi",
-    about_label: "O meni", about_title: "O meni",
+    about_label: "// O meni", about_title: "O meni",
     about_p1: `Bavim se <strong>grafičkim dizajnom</strong> i kroz svoj rad volim izražavati kreativnost i stalno istraživati nove ideje. Smatram se komunikativnom, kreativnom i odgovornom osobom koja uvijek traži načine kako unaprijediti svoje vještine i napredovati.`,
     about_p2: `Iako sam još u procesu učenja, <strong>mlada sam entuzijastica</strong> motivirana razvijati se u svim područjima dizajna i stalno raditi na sebi. Volim izazove i prilike koje mi omogućuju da naučim nešto novo i proširim svoje znanje.`,
     about_p3: `U slobodno vrijeme slušam <span class="highlight">trap</span> i istražujem nove stvari koje me mogu inspirirati u radu. Moj cilj je nastaviti rasti u svijetu dizajna i educirati se u što više različitih smjerova kako bih postala što bolja u onome što radim.`,
     about_p4: `Dostupna svima kojima treba jak vizualni identitet.`,
-    services_label: "Što radim", services_title: "Usluge",
+    services_label: "// Što radim", services_title: "Usluge",
     s1_name: "Event Posteri", s1_desc: "Kompletan vizualni identitet za nastupe, koncerte i evente. Jake kompozicije koje zaustave scroll.",
     s2_name: "Cover Art za Singlove & EP-ove", s2_desc: "Cover art koji prati energiju traka. Konzistentan vizualni identitet kroz cijeli projekt.",
     s3_name: "Artist Branding", s3_desc: "Vizualni sustavi za artiste — boje, tipografija i motivi koji te čine prepoznatljivim.",
-    s4_name: "Countdown Series", s5_desc: "Konzistentne pre-release vizualne kampanje za storyje i postove — hype na pravi način.",
+    s4_name: "Foto Editing", s4_desc: "Tamni duotone gradevi, halftone teksture, cutout kompoziting. Raw shotovi koji udaraju drugačije.",
+    s5_name: "Countdown Series", s5_desc: "Konzistentne pre-release vizualne kampanje za storyje i postove — hype na pravi način.",
     contact_label: "Kontakt", contact_title: "Izgradimo Nešto",
     contact_blurb: "Imaš projekt, izdanje ili event koji treba vizualni identitet? Javi se. Radim s artistima, labelima i produkcijama — s Balkana i ne samo."
   },
@@ -594,16 +596,17 @@ const i18n = {
     hero_cta1: "View Work", hero_cta2: "Get In Touch",
     scroll: "Scroll",
     work_title: "Selected Work",
-    about_label: "About me", about_title: "About Me",
+    about_label: "// About me", about_title: "About Me",
     about_p1: `I work in <strong>graphic design</strong> and love expressing creativity through my work while constantly exploring new ideas. I consider myself a communicative, creative, and responsible person who always looks for ways to improve my skills and grow.`,
     about_p2: `Although I'm still in the process of learning, I'm a <strong>young enthusiast</strong> motivated to develop across all areas of design and constantly work on myself. I love challenges and opportunities that allow me to learn something new.`,
     about_p3: `In my free time I listen to <span class="highlight">trap</span> and explore new things that can inspire my work. My goal is to keep growing in the world of design.`,
     about_p4: `Available to anyone who needs a strong visual identity.`,
-    services_label: "What I do", services_title: "Services",
+    services_label: "// What I do", services_title: "Services",
     s1_name: "Event Posters", s1_desc: "Full visual identity for shows, concerts, and events. Bold compositions built to stop thumbs mid-scroll.",
     s2_name: "Song & Album Covers", s2_desc: "Cover art that matches the energy of the track. Consistent visual identity across EPs and singles.",
     s3_name: "Artist Branding", s3_desc: "Visual systems for artists — colour coding, typography, recurring motifs that make you recognisable.",
-    s4_name: "Countdown Series", s5_desc: "Consistent pre-release visual campaigns across stories and posts — building hype the right way.",
+    s4_name: "Photo Editing", s4_desc: "Dark duotone grades, halftone textures, cutout compositing. Raw shots that hit differently.",
+    s5_name: "Countdown Series", s5_desc: "Consistent pre-release visual campaigns across stories and posts — building hype the right way.",
     contact_label: "Contact", contact_title: "Let's Build Something",
     contact_blurb: "Got a project, release, or event that needs a visual identity? Hit me up. I work with artists, labels, and productions — from the Balkans and beyond."
   },
@@ -614,16 +617,17 @@ const i18n = {
     hero_cta1: "Arbeiten ansehen", hero_cta2: "Kontakt aufnehmen",
     scroll: "Scrollen",
     work_title: "Ausgewählte Arbeiten",
-    about_label: "Über mich", about_title: "Über mich",
+    about_label: "// Über mich", about_title: "Über mich",
     about_p1: `Ich arbeite im Bereich <strong>Grafikdesign</strong> und liebe es, durch meine Arbeit Kreativität auszudrücken und ständig neue Ideen zu erkunden. Ich halte mich für eine kommunikative, kreative und verantwortungsvolle Person.`,
     about_p2: `Obwohl ich noch im Lernprozess bin, bin ich eine <strong>junge Enthusiastin</strong>, die motiviert ist, sich in allen Bereichen des Designs weiterzuentwickeln.`,
     about_p3: `In meiner Freizeit höre ich <span class="highlight">Trap</span> und erkunde neue Dinge, die mich bei meiner Arbeit inspirieren können. Mein Ziel ist es, in der Designwelt weiter zu wachsen.`,
     about_p4: `Für alle verfügbar, die ein starkes visuelles Konzept brauchen.`,
-    services_label: "Was ich mache", services_title: "Leistungen",
+    services_label: "// Was ich mache", services_title: "Leistungen",
     s1_name: "Event-Poster", s1_desc: "Komplette visuelle Identität für Shows, Konzerte und Events. Starke Kompositionen, die den Scroll stoppen.",
     s2_name: "Song & Album Cover", s2_desc: "Cover-Art, die zur Energie des Tracks passt. Konsistente visuelle Identität über EPs und Singles hinweg.",
     s3_name: "Artist Branding", s3_desc: "Visuelle Systeme für Künstler — Farbcodes, Typografie und Motive, die dich erkennbar machen.",
-    s4_name: "Countdown-Serien", s5_desc: "Konsistente Pre-Release-Kampagnen für Stories und Posts — Hype auf die richtige Art.",
+    s4_name: "Foto-Editing", s4_desc: "Dunkle Duotone-Bearbeitungen, Halftone-Texturen, Cutout-Compositing. Rohe Aufnahmen, die anders treffen.",
+    s5_name: "Countdown-Serien", s5_desc: "Konsistente Pre-Release-Kampagnen für Stories und Posts — Hype auf die richtige Art.",
     contact_label: "Kontakt", contact_title: "Lass uns was aufbauen",
     contact_blurb: "Du hast ein Projekt, eine Veröffentlichung oder ein Event, das eine visuelle Identität braucht? Meld dich. Ich arbeite mit Künstlern, Labels und Produktionen — aus dem Balkan und darüber hinaus."
   }
@@ -642,6 +646,58 @@ function setLang(lang) {
   });
   document.documentElement.lang = lang;
 }
+
+/* ── ZAŠTITA SLIKA ── */
+document.addEventListener('contextmenu', function(e) {
+  if (e.target.tagName === 'IMG') e.preventDefault();
+});
+document.addEventListener('dragstart', function(e) {
+  if (e.target.tagName === 'IMG') e.preventDefault();
+});
+
+/* ── GALERIJA LIGHTBOX ── */
+let aktivneSlike = [];
+let aktivnaImena = [];
+let trenutniIndex = 0;
+
+function pokreniGaleriju(kartica) {
+  aktivneSlike = kartica.getAttribute('data-gallery').split(',');
+  aktivnaImena = kartica.getAttribute('data-names').split(',');
+  trenutniIndex = 0;
+  prikaziSliku(0);
+  document.getElementById('custom-lightbox').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function prikaziSliku(index) {
+  trenutniIndex = index;
+  document.getElementById('custom-lightbox-img').src = aktivneSlike[index];
+  const nav = document.getElementById('custom-nav-names');
+  nav.innerHTML = '';
+  if (aktivneSlike.length > 1) {
+    aktivnaImena.forEach(function(ime, i) {
+      const btn = document.createElement('button');
+      btn.innerText = ime;
+      btn.className = 'custom-nav-btn' + (i === index ? ' is-active' : '');
+      btn.onclick = function(e) { e.stopPropagation(); prikaziSliku(i); };
+      nav.appendChild(btn);
+    });
+  }
+}
+
+function zatvoriGaleriju() {
+  document.getElementById('custom-lightbox').style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+document.addEventListener('keydown', function(e) {
+  const lb = document.getElementById('custom-lightbox');
+  if (lb.style.display === 'flex') {
+    if (e.key === 'Escape') zatvoriGaleriju();
+    if (e.key === 'ArrowRight') prikaziSliku((trenutniIndex + 1) % aktivneSlike.length);
+    if (e.key === 'ArrowLeft') prikaziSliku((trenutniIndex - 1 + aktivneSlike.length) % aktivneSlike.length);
+  }
+});
 
 /* ── CUSTOM CURSOR ── */
 const cursor = document.getElementById('cursor');
@@ -690,7 +746,6 @@ window.addEventListener('scroll', () => {
     ? 'rgba(10,10,10,0.97)'
     : 'linear-gradient(to bottom, rgba(10,10,10,.95) 0%, transparent 100%)';
 });
-
 
 /* ── SMOOTH SCROLL ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
