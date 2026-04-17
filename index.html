@@ -8,287 +8,159 @@
 <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Permanent+Marker&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
 :root {
-  --black:    #0a0a0a;
-  --black2:   #111111;
-  --red:      #8a0303;
-  --red2:     #b50404;
-  --cyan:     #00d4ff;
-  --cyan-dim: #007ea0;
-  --white:    #f0ece4;
-  --grey:     #2a2a2a;
-  --grey2:    #1a1a1a;
-  --font-old: 'UnifrakturMaguntia', serif;
-  --font-tag: 'Permanent Marker', cursive;
-  --font-ui:  'Barlow Condensed', sans-serif;
-  --font-body:'Barlow', sans-serif;
-  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+  --black:#0a0a0a; --black2:#111111; --red:#8a0303; --red2:#b50404;
+  --cyan:#00d4ff; --cyan-dim:#007ea0; --white:#f0ece4; --grey:#2a2a2a; --grey2:#1a1a1a;
+  --font-old:'UnifrakturMaguntia',serif; --font-tag:'Permanent Marker',cursive;
+  --font-ui:'Barlow Condensed',sans-serif; --font-body:'Barlow',sans-serif;
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
 }
-
-html { scroll-behavior: smooth; overflow-x: hidden; }
-body { background: var(--black); color: var(--white); font-family: var(--font-body); overflow-x: hidden; cursor: none; }
-
-/* ── ZAŠTITA SLIKA ── */
-img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
-* { -webkit-user-select: none; user-select: none; }
-.card, .card * { pointer-events: auto; }
-.card img { pointer-events: none; }
-
-.cursor { position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none; mix-blend-mode: difference; }
-.cursor-dot { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; position: absolute; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
-.cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(0,212,255,.4); border-radius: 50%; position: absolute; transform: translate(-50%,-50%); transition: all .12s ease; }
-.cursor.hovering .cursor-ring { width: 56px; height: 56px; border-color: var(--red2); background: rgba(138,3,3,.08); }
-
-body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; background: var(--noise); opacity: .5; }
-
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--black2); }
-::-webkit-scrollbar-thumb { background: var(--red); }
-
-/* ── LANGUAGE SWITCHER ── */
-.lang-switcher { display: flex; gap: 8px; align-items: center; }
-.lang-btn {
-  font-family: var(--font-ui); font-size: .75rem; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  background: none; border: 1px solid rgba(255,255,255,.12);
-  color: rgba(240,236,228,.4); padding: 5px 10px;
-  cursor: none; transition: all .3s;
-}
-.lang-btn.active, .lang-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,212,255,.05); }
-
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  padding: 20px 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: linear-gradient(to bottom, rgba(10,10,10,.95) 0%, transparent 100%);
-  backdrop-filter: blur(2px);
-  gap: 16px;
-}
-.nav-logo { font-family: var(--font-old); font-size: 1.6rem; color: var(--white); text-decoration: none; letter-spacing: 2px; position: relative; }
-.nav-logo::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--red), transparent); }
-.nav-right { display: flex; align-items: center; gap: 36px; }
-.nav-links { display: flex; gap: 36px; list-style: none; }
-.nav-links a { font-family: var(--font-ui); font-size: .85rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(240,236,228,.55); text-decoration: none; transition: color .3s; position: relative; }
-.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--cyan); transition: width .3s; }
-.nav-links a:hover { color: var(--white); }
-.nav-links a:hover::after { width: 100%; }
-.nav-menu { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-.nav-menu span { width: 28px; height: 2px; background: var(--white); display: block; transition: all .3s; }
-
-/* ── HERO ── */
-#hero { position: relative; height: 100vh; min-height: 700px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.hero-bg {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(138,3,3,.18) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 30%, rgba(0,212,255,.07) 0%, transparent 60%), linear-gradient(180deg, #0a0a0a 0%, #0f0505 50%, #0a0a0a 100%);
-}
-.hero-bg::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.3) 3px, rgba(0,0,0,.3) 4px); pointer-events: none; }
-.scratch { position: absolute; pointer-events: none; background: rgba(240,236,228,.025); }
-.scratch-1 { width: 1px; height: 60%; top: 15%; left: 22%; transform: rotate(3deg); }
-.scratch-2 { width: 1px; height: 40%; top: 30%; left: 75%; transform: rotate(-2deg); }
-.scratch-3 { width: 1px; height: 80%; top: 5%; left: 48%; transform: rotate(1deg); opacity: .4; }
-.hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; }
-.hero-eyebrow { font-family: var(--font-tag); font-size: .9rem; color: var(--cyan); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 18px; opacity: 0; animation: fadeUp .8s .3s forwards; }
-.hero-title { font-family: var(--font-old); font-size: clamp(4rem, 12vw, 9rem); line-height: .9; color: var(--white); text-shadow: 0 0 40px rgba(138,3,3,.6), 0 0 80px rgba(138,3,3,.2), 2px 2px 0 rgba(0,0,0,.8); opacity: 0; animation: fadeUp .8s .5s forwards; position: relative; }
-.hero-title .accent { color: var(--red2); }
-.hero-sub { font-family: var(--font-ui); font-size: clamp(1rem, 2.5vw, 1.3rem); font-weight: 300; letter-spacing: 8px; text-transform: uppercase; color: rgba(240,236,228,.6); margin-top: 28px; opacity: 0; animation: fadeUp .8s .7s forwards; }
-.hero-sub span { color: var(--cyan); }
-.hero-cta { margin-top: 52px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp .8s .9s forwards; }
-.btn { font-family: var(--font-ui); font-size: .85rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; padding: 14px 36px; text-decoration: none; display: inline-block; cursor: none; position: relative; overflow: hidden; transition: all .3s; }
-.btn-primary { background: var(--red); color: var(--white); border: 1px solid var(--red2); }
-.btn-primary::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent); transform: translateX(-100%); transition: transform .5s; }
-.btn-primary:hover::before { transform: translateX(100%); }
-.btn-primary:hover { box-shadow: 0 0 30px rgba(181,4,4,.5); }
-.btn-outline { background: transparent; color: var(--cyan); border: 1px solid rgba(0,212,255,.4); }
-.btn-outline:hover { background: rgba(0,212,255,.05); border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,212,255,.2), inset 0 0 20px rgba(0,212,255,.03); }
-.hero-sticker { position: absolute; bottom: 12%; right: 8%; font-family: var(--font-tag); font-size: 1.1rem; color: var(--red2); transform: rotate(-8deg); opacity: .6; animation: fadeUp .8s 1.1s forwards; border: 2px solid var(--red); padding: 8px 14px; background: rgba(138,3,3,.1); pointer-events: none; }
-.hero-sticker-2 { position: absolute; top: 22%; left: 6%; font-family: var(--font-tag); font-size: .85rem; color: rgba(0,212,255,.5); transform: rotate(4deg); pointer-events: none; animation: fadeIn 1s 1.3s both; }
-.scroll-hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: .7rem; letter-spacing: 4px; color: rgba(240,236,228,.3); text-transform: uppercase; animation: bounce 2.5s ease-in-out infinite; }
-.scroll-hint::after { content: ''; width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(240,236,228,.3), transparent); }
-
-/* ── SECTION SHARED ── */
-section { position: relative; z-index: 1; }
-.section-header { text-align: center; margin-bottom: 64px; }
-.section-label { font-family: var(--font-tag); font-size: .85rem; color: var(--red2); letter-spacing: 4px; display: block; margin-bottom: 16px; }
-.section-title { font-family: var(--font-old); font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1; text-shadow: 0 0 30px rgba(138,3,3,.3); }
-.section-divider { width: 80px; height: 2px; margin: 20px auto 0; background: linear-gradient(90deg, transparent, var(--red), transparent); }
-
-/* ── PORTFOLIO ── */
-#work { padding: 120px 48px; background: var(--black2); }
-#work::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; }
-.card { position: relative; overflow: hidden; aspect-ratio: 3/4; background: var(--grey2); cursor: none; }
-.card-bg { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; transition: transform .6s ease; }
-.card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,.97) 0%, rgba(138,3,3,.15) 40%, transparent 70%); opacity: 0; transition: opacity .4s; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px; }
-.card:hover .card-overlay { opacity: 1; }
-.card:hover .card-bg { transform: scale(1.06); }
-.card-glow { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(0,212,255,0); transition: box-shadow .4s; pointer-events: none; }
-.card:hover .card-glow { box-shadow: inset 0 0 0 1px rgba(0,212,255,.3), 0 0 30px rgba(0,212,255,.08); }
-.card-tag { font-family: var(--font-tag); font-size: .75rem; color: var(--cyan); margin-bottom: 8px; transform: translateY(10px); transition: transform .4s .05s; opacity: 0; }
-.card:hover .card-tag { transform: translateY(0); opacity: 1; }
-.card-title { font-family: var(--font-ui); font-size: 1.3rem; font-weight: 700; letter-spacing: 1px; transform: translateY(14px); transition: transform .4s .1s; opacity: 0; }
-.card:hover .card-title { transform: translateY(0); opacity: 1; }
-.card-arrow { width: 32px; height: 32px; margin-top: 14px; border: 1px solid rgba(0,212,255,.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .8rem; color: var(--cyan); transform: translateY(14px); transition: transform .4s .15s; opacity: 0; }
-.card:hover .card-arrow { transform: translateY(0); opacity: 1; }
-.card::after { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 8px 8px; opacity: 0; transition: opacity .4s; }
-.card:hover::after { opacity: 1; }
-
-/* ── ABOUT ── */
-#about { padding: 120px 48px; background: var(--black); }
-.about-inner { max-width: 960px; margin: 0 auto; }
-.about-header { text-align: center; margin-bottom: 56px; }
-.about-header .section-label { text-align: center; }
-.about-header .section-title { text-align: center; font-size: clamp(2rem, 4vw, 3rem); }
-.about-header .section-divider { margin: 20px auto 0; }
-.about-body-single { column-count: 2; column-gap: 48px; }
-.about-text { font-size: 1rem; line-height: 1.85; color: rgba(240,236,228,.7); margin-bottom: 18px; break-inside: avoid; }
-.about-text strong { color: var(--white); font-weight: 600; }
-.about-text .highlight { color: var(--cyan); }
-.about-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; justify-content: center; }
-.about-tags span { font-family: var(--font-ui); font-size: .75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 7px 16px; border: 1px solid rgba(240,236,228,.15); color: rgba(240,236,228,.5); transition: all .3s; }
-.about-tags span:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,212,255,.04); }
-@media(max-width:680px){ .about-body-single { column-count: 1; } }
-
-/* ── SERVICES ── */
-#services { padding: 120px 48px; background: var(--black2); overflow: hidden; }
-#services::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
-.services-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
-.service-card { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); padding: 40px 32px; position: relative; overflow: hidden; transition: border-color .3s, background .3s; cursor: none; }
-.service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--red); transition: height .4s; }
-.service-card:hover::before { height: 100%; }
-.service-card:hover { border-color: rgba(138,3,3,.4); background: rgba(138,3,3,.04); }
-.service-icon { font-family: var(--font-tag); font-size: 2rem; color: var(--red2); margin-bottom: 20px; display: block; transition: color .3s; }
-.service-card:hover .service-icon { color: var(--cyan); }
-.service-name { font-family: var(--font-ui); font-size: 1.15rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
-.service-desc { font-size: .9rem; line-height: 1.7; color: rgba(240,236,228,.5); }
-.service-corner { position: absolute; bottom: 16px; right: 20px; font-family: var(--font-tag); font-size: .75rem; color: rgba(0,212,255,.2); }
-
-/* ── CONTACT ── */
-#contact { padding: 120px 48px; background: var(--black); position: relative; }
-#contact::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
-.contact-inner { max-width: 700px; margin: 0 auto; }
-.contact-info .section-label { text-align: left; }
-.contact-info .section-title { text-align: left; font-size: clamp(2rem, 4vw, 3rem); }
-.contact-info .section-divider { margin-left: 0; }
-.contact-blurb { margin-top: 28px; font-size: .95rem; line-height: 1.8; color: rgba(240,236,228,.6); }
-.social-links { margin-top: 40px; display: flex; flex-direction: column; gap: 14px; }
-.social-link { display: flex; align-items: center; gap: 16px; text-decoration: none; color: rgba(240,236,228,.5); font-family: var(--font-ui); font-size: .9rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: color .3s; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.05); }
-.social-link:hover { color: var(--white); }
-.social-link:hover .social-icon { color: var(--cyan); }
-.social-icon { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: rgba(240,236,228,.4); transition: color .3s, border-color .3s; flex-shrink: 0; }
-.social-link:hover .social-icon { border-color: rgba(0,212,255,.4); }
-
-/* ── FOOTER ── */
-footer { padding: 40px 48px; background: var(--black2); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(255,255,255,.04); }
-.footer-logo { font-family: var(--font-old); font-size: 1.3rem; color: rgba(240,236,228,.4); }
-.footer-copy { font-family: var(--font-ui); font-size: .75rem; letter-spacing: 2px; color: rgba(240,236,228,.25); }
-.footer-tag { font-family: var(--font-tag); font-size: .9rem; color: var(--red2); opacity: .6; }
-
-/* ── GLITCH ── */
-.glitch { position: relative; }
-.glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-family: inherit; font-size: inherit; background: inherit; color: inherit; text-shadow: inherit; }
-.glitch::before { color: var(--cyan); clip-path: polygon(0 0,100% 0,100% 35%,0 35%); transform: translateX(-2px); animation: glitch-top 3.5s infinite; opacity: .7; }
-.glitch::after { color: var(--red2); clip-path: polygon(0 65%,100% 65%,100% 100%,0 100%); transform: translateX(2px); animation: glitch-bot 3.5s infinite; opacity: .7; }
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
-@keyframes glitch-top { 0%,89% { clip-path: polygon(0 0,100% 0,100% 35%,0 35%); transform: translateX(-2px); } 90% { clip-path: polygon(0 25%,100% 25%,100% 30%,0 30%); transform: translateX(4px); } 92% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); transform: translateX(-2px); opacity: 0; } 95% { clip-path: polygon(0 0,100% 0,100% 35%,0 35%); transform: translateX(-2px); opacity: .7; } 100% { clip-path: polygon(0 0,100% 0,100% 35%,0 35%); transform: translateX(-2px); } }
-@keyframes glitch-bot { 0%,89% { clip-path: polygon(0 65%,100% 65%,100% 100%,0 100%); transform: translateX(2px); } 90% { clip-path: polygon(0 70%,100% 70%,100% 75%,0 75%); transform: translateX(-4px); } 92% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); transform: translateX(2px); opacity: 0; } 95% { clip-path: polygon(0 65%,100% 65%,100% 100%,0 100%); transform: translateX(2px); opacity: .7; } 100% { clip-path: polygon(0 65%,100% 65%,100% 100%,0 100%); transform: translateX(2px); } }
-
-/* ── REVEAL ── */
-.reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity .8s ease, transform .8s ease; }
-.reveal-left.visible { opacity: 1; transform: translateX(0); }
-.reveal-right { opacity: 0; transform: translateX(40px); transition: opacity .8s ease, transform .8s ease; }
-.reveal-right.visible { opacity: 1; transform: translateX(0); }
-
-/* ── LIGHTBOX ── */
-#custom-lightbox {
-  display: none;
-  position: fixed;
-  z-index: 999999;
-  left: 0; top: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.98);
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-#custom-lightbox img {
-  max-height: 70vh;
-  max-width: 90%;
-  object-fit: contain;
-  border-radius: 2px;
-  pointer-events: none;
-  -webkit-user-drag: none;
-}
-.close-custom {
-  position: absolute;
-  top: 30px; right: 30px;
-  color: #fff; font-size: 40px; cursor: pointer;
-  line-height: 1; pointer-events: auto;
-}
-.custom-nav-container {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.custom-nav-btn {
-  color: #fff;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.2);
-  cursor: pointer;
-  font-size: 11px;
-  text-transform: uppercase;
-  padding: 10px 18px;
-  transition: 0.3s;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  pointer-events: auto;
-}
-.custom-nav-btn:hover { background: rgba(255,255,255,0.15); }
-.custom-nav-btn.is-active {
-  background: #fff;
-  color: #000;
-  font-weight: bold;
-}
-
-/* ── MOBILE NAV ── */
-.mobile-menu { display: none; position: fixed; inset: 0; z-index: 998; background: rgba(10,10,10,.98); flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
-.mobile-menu.open { display: flex; }
-.mobile-menu a { font-family: var(--font-old); font-size: 2.2rem; color: var(--white); text-decoration: none; transition: color .3s; }
-.mobile-menu a:hover { color: var(--red2); }
-.mobile-lang { display: flex; gap: 10px; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  nav { padding: 18px 24px; }
-  .nav-links { display: none; }
-  .nav-menu { display: flex; }
-  #hero, #work, #about, #services, #contact { padding-left: 24px; padding-right: 24px; }
-  .hero-sticker { display: none; }
-  footer { padding: 32px 24px; }
-  .lang-switcher { display: none; }
-}
-@media (max-width: 600px) {
-  .grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--black);color:var(--white);font-family:var(--font-body);overflow-x:hidden;cursor:none}
+img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
+*{-webkit-user-select:none;user-select:none}
+.card,.card *{pointer-events:auto}.card img{pointer-events:none}
+.cursor{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;mix-blend-mode:difference}
+.cursor-dot{width:8px;height:8px;background:var(--cyan);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+.cursor-ring{width:36px;height:36px;border:1px solid rgba(0,212,255,.4);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:all .12s ease}
+.cursor.hovering .cursor-ring{width:56px;height:56px;border-color:var(--red2);background:rgba(138,3,3,.08)}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--noise);opacity:.5}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--black2)}::-webkit-scrollbar-thumb{background:var(--red)}
+.lang-switcher{display:flex;gap:8px;align-items:center}
+.lang-btn{font-family:var(--font-ui);font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:1px solid rgba(255,255,255,.12);color:rgba(240,236,228,.4);padding:5px 10px;cursor:none;transition:all .3s}
+.lang-btn.active,.lang-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.05)}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(10,10,10,.95) 0%,transparent 100%);backdrop-filter:blur(2px);gap:16px}
+.nav-logo{font-family:var(--font-old);font-size:1.6rem;color:var(--white);text-decoration:none;letter-spacing:2px;position:relative}
+.nav-logo::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--red),transparent)}
+.nav-right{display:flex;align-items:center;gap:36px}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-family:var(--font-ui);font-size:.85rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(240,236,228,.55);text-decoration:none;transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s}
+.nav-links a:hover{color:var(--white)}.nav-links a:hover::after{width:100%}
+.nav-menu{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.nav-menu span{width:28px;height:2px;background:var(--white);display:block;transition:all .3s}
+#hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 60%,rgba(138,3,3,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 30%,rgba(0,212,255,.07) 0%,transparent 60%),linear-gradient(180deg,#0a0a0a 0%,#0f0505 50%,#0a0a0a 100%)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.3) 3px,rgba(0,0,0,.3) 4px);pointer-events:none}
+.scratch{position:absolute;pointer-events:none;background:rgba(240,236,228,.025)}
+.scratch-1{width:1px;height:60%;top:15%;left:22%;transform:rotate(3deg)}
+.scratch-2{width:1px;height:40%;top:30%;left:75%;transform:rotate(-2deg)}
+.scratch-3{width:1px;height:80%;top:5%;left:48%;transform:rotate(1deg);opacity:.4}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 24px}
+.hero-eyebrow{font-family:var(--font-tag);font-size:.9rem;color:var(--cyan);letter-spacing:6px;text-transform:uppercase;margin-bottom:18px;opacity:0;animation:fadeUp .8s .3s forwards}
+.hero-title{font-family:var(--font-old);font-size:clamp(4rem,12vw,9rem);line-height:.9;color:var(--white);text-shadow:0 0 40px rgba(138,3,3,.6),0 0 80px rgba(138,3,3,.2),2px 2px 0 rgba(0,0,0,.8);opacity:0;animation:fadeUp .8s .5s forwards;position:relative}
+.hero-title .accent{color:var(--red2)}
+.hero-sub{font-family:var(--font-ui);font-size:clamp(1rem,2.5vw,1.3rem);font-weight:300;letter-spacing:8px;text-transform:uppercase;color:rgba(240,236,228,.6);margin-top:28px;opacity:0;animation:fadeUp .8s .7s forwards}
+.hero-sub span{color:var(--cyan)}
+.hero-cta{margin-top:52px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .9s forwards}
+.btn{font-family:var(--font-ui);font-size:.85rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;padding:14px 36px;text-decoration:none;display:inline-block;cursor:none;position:relative;overflow:hidden;transition:all .3s}
+.btn-primary{background:var(--red);color:var(--white);border:1px solid var(--red2)}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-primary:hover::before{transform:translateX(100%)}.btn-primary:hover{box-shadow:0 0 30px rgba(181,4,4,.5)}
+.btn-outline{background:transparent;color:var(--cyan);border:1px solid rgba(0,212,255,.4)}
+.btn-outline:hover{background:rgba(0,212,255,.05);border-color:var(--cyan);box-shadow:0 0 20px rgba(0,212,255,.2),inset 0 0 20px rgba(0,212,255,.03)}
+.hero-sticker{position:absolute;bottom:12%;right:8%;font-family:var(--font-tag);font-size:1.1rem;color:var(--red2);transform:rotate(-8deg);opacity:.6;animation:fadeUp .8s 1.1s forwards;border:2px solid var(--red);padding:8px 14px;background:rgba(138,3,3,.1);pointer-events:none}
+.hero-sticker-2{position:absolute;top:22%;left:6%;font-family:var(--font-tag);font-size:.85rem;color:rgba(0,212,255,.5);transform:rotate(4deg);pointer-events:none;animation:fadeIn 1s 1.3s both}
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--font-ui);font-size:.7rem;letter-spacing:4px;color:rgba(240,236,228,.3);text-transform:uppercase;animation:bounce 2.5s ease-in-out infinite}
+.scroll-hint::after{content:'';width:1px;height:50px;background:linear-gradient(to bottom,rgba(240,236,228,.3),transparent)}
+section{position:relative;z-index:1}
+.section-header{text-align:center;margin-bottom:64px}
+.section-label{font-family:var(--font-tag);font-size:.85rem;color:var(--red2);letter-spacing:4px;display:block;margin-bottom:16px}
+.section-title{font-family:var(--font-old);font-size:clamp(2.5rem,6vw,4.5rem);line-height:1;text-shadow:0 0 30px rgba(138,3,3,.3)}
+.section-divider{width:80px;height:2px;margin:20px auto 0;background:linear-gradient(90deg,transparent,var(--red),transparent)}
+#work{padding:120px 48px;background:var(--black2)}
+#work::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;max-width:1300px;margin:0 auto}
+.card{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--grey2);cursor:none}
+.card-bg{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;transition:transform .6s ease}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.97) 0%,rgba(138,3,3,.15) 40%,transparent 70%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:28px}
+.card:hover .card-overlay{opacity:1}.card:hover .card-bg{transform:scale(1.06)}
+.card-glow{position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(0,212,255,0);transition:box-shadow .4s;pointer-events:none}
+.card:hover .card-glow{box-shadow:inset 0 0 0 1px rgba(0,212,255,.3),0 0 30px rgba(0,212,255,.08)}
+.card-tag{font-family:var(--font-tag);font-size:.75rem;color:var(--cyan);margin-bottom:8px;transform:translateY(10px);transition:transform .4s .05s;opacity:0}
+.card:hover .card-tag{transform:translateY(0);opacity:1}
+.card-title{font-family:var(--font-ui);font-size:1.3rem;font-weight:700;letter-spacing:1px;transform:translateY(14px);transition:transform .4s .1s;opacity:0}
+.card:hover .card-title{transform:translateY(0);opacity:1}
+.card-arrow{width:32px;height:32px;margin-top:14px;border:1px solid rgba(0,212,255,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--cyan);transform:translateY(14px);transition:transform .4s .15s;opacity:0}
+.card:hover .card-arrow{transform:translateY(0);opacity:1}
+.card::after{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px);background-size:8px 8px;opacity:0;transition:opacity .4s}
+.card:hover::after{opacity:1}
+#about{padding:120px 48px;background:var(--black)}
+.about-inner{max-width:960px;margin:0 auto}
+.about-header{text-align:center;margin-bottom:56px}
+.about-header .section-label,.about-header .section-title{text-align:center}
+.about-header .section-title{font-size:clamp(2rem,4vw,3rem)}
+.about-header .section-divider{margin:20px auto 0}
+.about-body-single{column-count:2;column-gap:48px}
+.about-text{font-size:1rem;line-height:1.85;color:rgba(240,236,228,.7);margin-bottom:18px;break-inside:avoid}
+.about-text strong{color:var(--white);font-weight:600}.about-text .highlight{color:var(--cyan)}
+.about-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px;justify-content:center}
+.about-tags span{font-family:var(--font-ui);font-size:.75rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;padding:7px 16px;border:1px solid rgba(240,236,228,.15);color:rgba(240,236,228,.5);transition:all .3s}
+.about-tags span:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.04)}
+@media(max-width:680px){.about-body-single{column-count:1}}
+#services{padding:120px 48px;background:var(--black2);overflow:hidden}
+#services::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.services-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+.service-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);padding:40px 32px;position:relative;overflow:hidden;transition:border-color .3s,background .3s;cursor:none}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--red);transition:height .4s}
+.service-card:hover::before{height:100%}
+.service-card:hover{border-color:rgba(138,3,3,.4);background:rgba(138,3,3,.04)}
+.service-icon{font-family:var(--font-tag);font-size:2rem;color:var(--red2);margin-bottom:20px;display:block;transition:color .3s}
+.service-card:hover .service-icon{color:var(--cyan)}
+.service-name{font-family:var(--font-ui);font-size:1.15rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.service-desc{font-size:.9rem;line-height:1.7;color:rgba(240,236,228,.5)}
+.service-corner{position:absolute;bottom:16px;right:20px;font-family:var(--font-tag);font-size:.75rem;color:rgba(0,212,255,.2)}
+#contact{padding:120px 48px;background:var(--black);position:relative}
+#contact::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.contact-inner{max-width:700px;margin:0 auto}
+.contact-info .section-label{text-align:left}.contact-info .section-title{text-align:left;font-size:clamp(2rem,4vw,3rem)}
+.contact-info .section-divider{margin-left:0}
+.contact-blurb{margin-top:28px;font-size:.95rem;line-height:1.8;color:rgba(240,236,228,.6)}
+.social-links{margin-top:40px;display:flex;flex-direction:column;gap:14px}
+.social-link{display:flex;align-items:center;gap:16px;text-decoration:none;color:rgba(240,236,228,.5);font-family:var(--font-ui);font-size:.9rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;transition:color .3s;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.05)}
+.social-link:hover{color:var(--white)}.social-link:hover .social-icon{color:var(--cyan)}
+.social-icon{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:1rem;color:rgba(240,236,228,.4);transition:color .3s,border-color .3s;flex-shrink:0}
+.social-link:hover .social-icon{border-color:rgba(0,212,255,.4)}
+footer{padding:40px 48px;background:var(--black2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;border-top:1px solid rgba(255,255,255,.04)}
+.footer-logo{font-family:var(--font-old);font-size:1.3rem;color:rgba(240,236,228,.4)}
+.footer-copy{font-family:var(--font-ui);font-size:.75rem;letter-spacing:2px;color:rgba(240,236,228,.25)}
+.footer-tag{font-family:var(--font-tag);font-size:.9rem;color:var(--red2);opacity:.6}
+.glitch{position:relative}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;font-family:inherit;font-size:inherit;background:inherit;color:inherit;text-shadow:inherit}
+.glitch::before{color:var(--cyan);clip-path:polygon(0 0,100% 0,100% 35%,0 35%);transform:translateX(-2px);animation:glitch-top 3.5s infinite;opacity:.7}
+.glitch::after{color:var(--red2);clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);transform:translateX(2px);animation:glitch-bot 3.5s infinite;opacity:.7}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+@keyframes glitch-top{0%,89%{clip-path:polygon(0 0,100% 0,100% 35%,0 35%);transform:translateX(-2px)}90%{clip-path:polygon(0 25%,100% 25%,100% 30%,0 30%);transform:translateX(4px)}92%{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:translateX(-2px);opacity:0}95%{clip-path:polygon(0 0,100% 0,100% 35%,0 35%);transform:translateX(-2px);opacity:.7}100%{clip-path:polygon(0 0,100% 0,100% 35%,0 35%);transform:translateX(-2px)}}
+@keyframes glitch-bot{0%,89%{clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);transform:translateX(2px)}90%{clip-path:polygon(0 70%,100% 70%,100% 75%,0 75%);transform:translateX(-4px)}92%{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:translateX(2px);opacity:0}95%{clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);transform:translateX(2px);opacity:.7}100%{clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);transform:translateX(2px)}}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+#custom-lightbox{display:none;position:fixed;z-index:999999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.98);align-items:center;justify-content:center;flex-direction:column}
+#custom-lightbox img{max-height:70vh;max-width:90%;object-fit:contain;border-radius:2px;pointer-events:none;-webkit-user-drag:none}
+.close-custom{position:absolute;top:30px;right:30px;color:#fff;font-size:40px;cursor:pointer;line-height:1;pointer-events:auto}
+.custom-nav-container{margin-top:20px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.custom-nav-btn{color:#fff;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.2);cursor:pointer;font-size:11px;text-transform:uppercase;padding:10px 18px;transition:.3s;border-radius:4px;letter-spacing:1px;pointer-events:auto}
+.custom-nav-btn:hover{background:rgba(255,255,255,.15)}.custom-nav-btn.is-active{background:#fff;color:#000;font-weight:bold}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:998;background:rgba(10,10,10,.98);flex-direction:column;align-items:center;justify-content:center;gap:40px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--font-old);font-size:2.2rem;color:var(--white);text-decoration:none;transition:color .3s}
+.mobile-menu a:hover{color:var(--red2)}.mobile-lang{display:flex;gap:10px}
+@media(max-width:900px){nav{padding:18px 24px}.nav-links{display:none}.nav-menu{display:flex}#hero,#work,#about,#services,#contact{padding-left:24px;padding-right:24px}.hero-sticker{display:none}footer{padding:32px 24px}.lang-switcher{display:none}}
+@media(max-width:600px){.grid{grid-template-columns:1fr 1fr;gap:12px}}
 </style>
 </head>
 <body>
 
-<!-- CURSOR -->
 <div class="cursor" id="cursor">
   <div class="cursor-ring" id="cursorRing"></div>
   <div class="cursor-dot" id="cursorDot"></div>
 </div>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#work" onclick="closeMobile()" data-i18n="nav_work">Radovi</a>
   <a href="#about" onclick="closeMobile()" data-i18n="nav_about">O meni</a>
@@ -301,7 +173,6 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </div>
 </div>
 
-<!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">Almx Studio</a>
   <div class="nav-right">
@@ -322,7 +193,6 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
 <section id="hero">
   <div class="hero-bg">
     <div class="scratch scratch-1"></div>
@@ -331,9 +201,7 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </div>
   <div class="hero-content">
     <div class="hero-eyebrow" data-i18n="hero_eyebrow">Zagreb · Balkan Scena · Underground</div>
-    <h1 class="hero-title glitch" data-text="Almx Studio">
-      Almx&nbsp;<span class="accent">Studio</span>
-    </h1>
+    <h1 class="hero-title glitch" data-text="Almx Studio">Almx&nbsp;<span class="accent">Studio</span></h1>
     <p class="hero-sub">
       <span data-i18n="hero_sub">Vizualni Dizajn</span>&nbsp;&nbsp;<span>/</span>&nbsp;&nbsp;<span data-i18n="hero_sub2">Editi</span>&nbsp;&nbsp;<span>/</span>&nbsp;&nbsp;<span data-i18n="hero_sub3">Kreativa</span>
     </p>
@@ -347,21 +215,16 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   <div class="scroll-hint" data-i18n="scroll">Skrolaj</div>
 </section>
 
-<!-- ═══ WORK ═══ -->
 <section id="work">
   <div class="section-header reveal">
     <span class="section-label">// Portfolio</span>
     <h2 class="section-title" data-i18n="work_title">Odabrani Radovi</h2>
     <div class="section-divider"></div>
   </div>
-
   <div class="grid">
 
-    <!-- SBL Series: JAC, MAVID, Lokki + Ruda 99 kad uploadaš 99v1.webp -->
-    <div class="card reveal"
-         data-gallery="jacv1.webp,MAVID.webp,lokki.webp"
-         data-names="JAC,MAVID,Lokki"
-         onclick="pokreniGaleriju(this)">
+    <!-- Ruda99 added to SBL Series -->
+    <div class="card reveal" data-gallery="jacv1.webp,MAVID.webp,lokki.webp,99v1.webp" data-names="JAC,MAVID,Lokki,Ruda99" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="jacv1.webp" alt="">
       <div class="card-glow"></div>
       <div class="card-overlay">
@@ -371,11 +234,8 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       </div>
     </div>
 
-    <!-- Luzeri Series: Goca, Dipsi + Nikola kad uploadaš NIKOLAV1.webp -->
-    <div class="card reveal"
-         data-gallery="gocav1.webp,dipsiv1.webp"
-         data-names="Goca,Dipsi"
-         onclick="pokreniGaleriju(this)">
+    <!-- Nikola dodan -->
+    <div class="card reveal" data-gallery="gocav1.webp,dipsiv1.webp,NIKOLAV1.webp" data-names="Goca,Dipsi,Nikola" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="gocav1.webp" alt="">
       <div class="card-glow"></div>
       <div class="card-overlay">
@@ -385,90 +245,51 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       </div>
     </div>
 
-    <!-- Drito iz Arene -->
-    <div class="card reveal"
-         data-gallery="DRITOIZARENEV1.webp"
-         data-names="Drito iz Arene"
-         onclick="pokreniGaleriju(this)">
+    <div class="card reveal" data-gallery="DRITOIZARENEV1.webp" data-names="Drito iz Arene" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="DRITOIZARENEV1.webp" alt="">
       <div class="card-glow"></div>
-      <div class="card-overlay">
-        <div class="card-title">Drito iz Arene</div>
-      </div>
+      <div class="card-overlay"><div class="card-title">Drito iz Arene</div></div>
     </div>
 
-    <!-- Špiro -->
-    <div class="card reveal"
-         data-gallery="SPIROv2.webp"
-         data-names="Špiro"
-         onclick="pokreniGaleriju(this)">
+    <div class="card reveal" data-gallery="SPIROv2.webp" data-names="Špiro" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="SPIROv2.webp" alt="">
       <div class="card-glow"></div>
-      <div class="card-overlay">
-        <div class="card-title">Špiro</div>
-      </div>
+      <div class="card-overlay"><div class="card-title">Špiro</div></div>
     </div>
 
-    <!-- Popke -->
-    <div class="card reveal"
-         data-gallery="popkev1.webp"
-         data-names="Popke"
-         onclick="pokreniGaleriju(this)">
+    <div class="card reveal" data-gallery="popkev1.webp" data-names="Popke" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="popkev1.webp" alt="">
       <div class="card-glow"></div>
-      <div class="card-overlay">
-        <div class="card-title">Popke</div>
-      </div>
+      <div class="card-overlay"><div class="card-title">Popke</div></div>
     </div>
 
-    <!-- Doktorukući -->
-    <div class="card reveal"
-         data-gallery="doktorukuciv2.webp"
-         data-names="Doktorukući"
-         onclick="pokreniGaleriju(this)">
+    <div class="card reveal" data-gallery="doktorukuciv2.webp" data-names="Doktorukući" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="doktorukuciv2.webp" alt="">
       <div class="card-glow"></div>
-      <div class="card-overlay">
-        <div class="card-title">Doktorukući</div>
-      </div>
+      <div class="card-overlay"><div class="card-title">Doktorukući</div></div>
     </div>
 
-    <!-- Grim Chrome Hearts -->
-    <div class="card reveal"
-         data-gallery="Grim_chromehearts.webp"
-         data-names="Grim Chrome Hearts"
-         onclick="pokreniGaleriju(this)">
+    <div class="card reveal" data-gallery="Grim_chromehearts.webp" data-names="Grim Chrome Hearts" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="Grim_chromehearts.webp" alt="">
       <div class="card-glow"></div>
-      <div class="card-overlay">
-        <div class="card-title">Grim Chrome Hearts</div>
-      </div>
+      <div class="card-overlay"><div class="card-title">Grim Chrome Hearts</div></div>
     </div>
 
-    <!-- Yung Bude -->
-    <div class="card reveal"
-         data-gallery="BUDEYlogo.webp"
-         data-names="Yung Bude"
-         onclick="pokreniGaleriju(this)">
+    <div class="card reveal" data-gallery="BUDEYlogo.webp" data-names="Yung Bude" onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="BUDEYlogo.webp" alt="">
       <div class="card-glow"></div>
-      <div class="card-overlay">
-        <div class="card-title">Yung Bude</div>
-      </div>
+      <div class="card-overlay"><div class="card-title">Yung Bude</div></div>
     </div>
 
   </div>
 
-  <!-- LIGHTBOX -->
-  <div id="custom-lightbox" onclick="if(event.target === this) zatvoriGaleriju()">
+  <div id="custom-lightbox" onclick="if(event.target===this)zatvoriGaleriju()">
     <span class="close-custom" onclick="zatvoriGaleriju()">&times;</span>
     <img id="custom-lightbox-img" src="" alt="">
     <div id="custom-nav-names" class="custom-nav-container"></div>
   </div>
-
 </section>
 
-<!-- ═══ ABOUT ═══ -->
 <section id="about">
   <div class="about-inner">
     <div class="about-header reveal">
@@ -487,13 +308,11 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       <span>Cover Art</span>
       <span>Branding</span>
       <span>Dark Aesthetic</span>
-      <span>Photo Editing</span>
       <span>Trap / Underground</span>
     </div>
   </div>
 </section>
 
-<!-- ═══ SERVICES ═══ -->
 <section id="services">
   <div class="section-header reveal">
     <span class="section-label" data-i18n="services_label">// Što radim</span>
@@ -509,7 +328,7 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
     </div>
     <div class="service-card reveal">
       <span class="service-icon">◈</span>
-      <div class="service-name" data-i18n="s2_name">Cover Art za Singlove & EP-ove</div>
+      <div class="service-name" data-i18n="s2_name">Cover Art za Singlove &amp; EP-ove</div>
       <p class="service-desc" data-i18n="s2_desc">Cover art koji prati energiju traka. Konzistentan vizualni identitet kroz cijeli projekt.</p>
       <span class="service-corner">02</span>
     </div>
@@ -520,45 +339,33 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       <span class="service-corner">03</span>
     </div>
     <div class="service-card reveal">
-      <span class="service-icon">◉</span>
-      <div class="service-name" data-i18n="s4_name">Foto Editing</div>
-      <p class="service-desc" data-i18n="s4_desc">Tamni duotone gradevi, halftone teksture, cutout kompoziting. Raw shotovi koji udaraju drugačije.</p>
-      <span class="service-corner">04</span>
-    </div>
-    <div class="service-card reveal">
       <span class="service-icon">▲</span>
-      <div class="service-name" data-i18n="s5_name">Countdown Series</div>
-      <p class="service-desc" data-i18n="s5_desc">Konzistentne pre-release vizualne kampanje za storyje i postove — hype na pravi način.</p>
-      <span class="service-corner">05</span>
+      <div class="service-name" data-i18n="s4_name">Countdown Series</div>
+      <p class="service-desc" data-i18n="s4_desc">Konzistentne pre-release vizualne kampanje za storyje i postove — hype na pravi način.</p>
+      <span class="service-corner">04</span>
     </div>
   </div>
 </section>
 
-<!-- ═══ CONTACT ═══ -->
 <section id="contact">
   <div class="contact-inner">
     <div class="contact-info reveal-left">
       <span class="section-label">// <span data-i18n="contact_label">Kontakt</span></span>
       <h2 class="section-title" data-i18n="contact_title">Izgradimo Nešto</h2>
       <div class="section-divider"></div>
-      <p class="contact-blurb" data-i18n="contact_blurb">
-        Imaš projekt, izdanje ili event koji treba vizualni identitet? Javi se. Radim s artistima, labelima i produkcijama na balkanskoj underground i široj sceni.
-      </p>
+      <p class="contact-blurb" data-i18n="contact_blurb">Imaš projekt, izdanje ili event koji treba vizualni identitet? Javi se. Radim s artistima, labelima i produkcijama na balkanskoj underground i široj sceni.</p>
       <div class="social-links">
         <a class="social-link" href="https://instagram.com/almx.dsgn" target="_blank" rel="noopener">
-          <span class="social-icon">ig</span>
-          @almx.dsgn
+          <span class="social-icon">ig</span>@almx.dsgn
         </a>
         <a class="social-link" href="mailto:almx.dsgn@gmail.com">
-          <span class="social-icon">✉</span>
-          almx.dsgn@gmail.com
+          <span class="social-icon">✉</span>almx.dsgn@gmail.com
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <span class="footer-logo">Almx Studio</span>
   <span class="footer-tag">// raw but controlled</span>
@@ -566,197 +373,155 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
 </footer>
 
 <script>
-/* ══ TRANSLATIONS ══ */
 const i18n = {
   hr: {
-    nav_work: "Radovi", nav_about: "O meni", nav_services: "Usluge", nav_contact: "Kontakt",
-    hero_eyebrow: "Zagreb · Balkan Scena · Underground",
-    hero_sub: "Vizualni Dizajn", hero_sub2: "Editi", hero_sub3: "Kreativa",
-    hero_cta1: "Pogledaj Radove", hero_cta2: "Kontaktiraj Me",
-    scroll: "Skrolaj",
-    work_title: "Odabrani Radovi",
-    about_label: "// O meni", about_title: "O meni",
-    about_p1: `Bavim se <strong>grafičkim dizajnom</strong> i kroz svoj rad volim izražavati kreativnost i stalno istraživati nove ideje. Smatram se komunikativnom, kreativnom i odgovornom osobom koja uvijek traži načine kako unaprijediti svoje vještine i napredovati.`,
-    about_p2: `Iako sam još u procesu učenja, <strong>mlada sam entuzijastica</strong> motivirana razvijati se u svim područjima dizajna i stalno raditi na sebi. Volim izazove i prilike koje mi omogućuju da naučim nešto novo i proširim svoje znanje.`,
-    about_p3: `U slobodno vrijeme slušam <span class="highlight">trap</span> i istražujem nove stvari koje me mogu inspirirati u radu. Moj cilj je nastaviti rasti u svijetu dizajna i educirati se u što više različitih smjerova kako bih postala što bolja u onome što radim.`,
-    about_p4: `Dostupna svima kojima treba jak vizualni identitet.`,
-    services_label: "// Što radim", services_title: "Usluge",
-    s1_name: "Event Posteri", s1_desc: "Kompletan vizualni identitet za nastupe, koncerte i evente. Jake kompozicije koje zaustave scroll.",
-    s2_name: "Cover Art za Singlove & EP-ove", s2_desc: "Cover art koji prati energiju traka. Konzistentan vizualni identitet kroz cijeli projekt.",
-    s3_name: "Artist Branding", s3_desc: "Vizualni sustavi za artiste — boje, tipografija i motivi koji te čine prepoznatljivim.",
-    s4_name: "Foto Editing", s4_desc: "Tamni duotone gradevi, halftone teksture, cutout kompoziting. Raw shotovi koji udaraju drugačije.",
-    s5_name: "Countdown Series", s5_desc: "Konzistentne pre-release vizualne kampanje za storyje i postove — hype na pravi način.",
-    contact_label: "Kontakt", contact_title: "Izgradimo Nešto",
-    contact_blurb: "Imaš projekt, izdanje ili event koji treba vizualni identitet? Javi se. Radim s artistima, labelima i produkcijama — s Balkana i ne samo."
+    nav_work:"Radovi",nav_about:"O meni",nav_services:"Usluge",nav_contact:"Kontakt",
+    hero_eyebrow:"Zagreb · Balkan Scena · Underground",
+    hero_sub:"Vizualni Dizajn",hero_sub2:"Editi",hero_sub3:"Kreativa",
+    hero_cta1:"Pogledaj Radove",hero_cta2:"Kontaktiraj Me",scroll:"Skrolaj",
+    work_title:"Odabrani Radovi",about_label:"// O meni",about_title:"O meni",
+    about_p1:`Bavim se <strong>grafičkim dizajnom</strong> i kroz svoj rad volim izražavati kreativnost i stalno istraživati nove ideje. Smatram se komunikativnom, kreativnom i odgovornom osobom koja uvijek traži načine kako unaprijediti svoje vještine i napredovati.`,
+    about_p2:`Iako sam još u procesu učenja, <strong>mlada sam entuzijastica</strong> motivirana razvijati se u svim područjima dizajna i stalno raditi na sebi. Volim izazove i prilike koje mi omogućuju da naučim nešto novo i proširim svoje znanje.`,
+    about_p3:`U slobodno vrijeme slušam <span class="highlight">trap</span> i istražujem nove stvari koje me mogu inspirirati u radu. Moj cilj je nastaviti rasti u svijetu dizajna i educirati se u što više različitih smjerova kako bih postala što bolja u onome što radim.`,
+    about_p4:`Dostupna svima kojima treba jak vizualni identitet.`,
+    services_label:"// Što radim",services_title:"Usluge",
+    s1_name:"Event Posteri",s1_desc:"Kompletan vizualni identitet za nastupe, koncerte i evente. Jake kompozicije koje zaustave scroll.",
+    s2_name:"Cover Art za Singlove & EP-ove",s2_desc:"Cover art koji prati energiju traka. Konzistentan vizualni identitet kroz cijeli projekt.",
+    s3_name:"Artist Branding",s3_desc:"Vizualni sustavi za artiste — boje, tipografija i motivi koji te čine prepoznatljivim.",
+    s4_name:"Countdown Series",s4_desc:"Konzistentne pre-release vizualne kampanje za storyje i postove — hype na pravi način.",
+    contact_label:"Kontakt",contact_title:"Izgradimo Nešto",
+    contact_blurb:"Imaš projekt, izdanje ili event koji treba vizualni identitet? Javi se. Radim s artistima, labelima i produkcijama — s Balkana i ne samo."
   },
   en: {
-    nav_work: "Work", nav_about: "About", nav_services: "Services", nav_contact: "Contact",
-    hero_eyebrow: "Zagreb · Balkan Scene · Underground",
-    hero_sub: "Creative Visuals", hero_sub2: "Edits", hero_sub3: "Design",
-    hero_cta1: "View Work", hero_cta2: "Get In Touch",
-    scroll: "Scroll",
-    work_title: "Selected Work",
-    about_label: "// About me", about_title: "About Me",
-    about_p1: `I work in <strong>graphic design</strong> and love expressing creativity through my work while constantly exploring new ideas. I consider myself a communicative, creative, and responsible person who always looks for ways to improve my skills and grow.`,
-    about_p2: `Although I'm still in the process of learning, I'm a <strong>young enthusiast</strong> motivated to develop across all areas of design and constantly work on myself. I love challenges and opportunities that allow me to learn something new.`,
-    about_p3: `In my free time I listen to <span class="highlight">trap</span> and explore new things that can inspire my work. My goal is to keep growing in the world of design.`,
-    about_p4: `Available to anyone who needs a strong visual identity.`,
-    services_label: "// What I do", services_title: "Services",
-    s1_name: "Event Posters", s1_desc: "Full visual identity for shows, concerts, and events. Bold compositions built to stop thumbs mid-scroll.",
-    s2_name: "Song & Album Covers", s2_desc: "Cover art that matches the energy of the track. Consistent visual identity across EPs and singles.",
-    s3_name: "Artist Branding", s3_desc: "Visual systems for artists — colour coding, typography, recurring motifs that make you recognisable.",
-    s4_name: "Photo Editing", s4_desc: "Dark duotone grades, halftone textures, cutout compositing. Raw shots that hit differently.",
-    s5_name: "Countdown Series", s5_desc: "Consistent pre-release visual campaigns across stories and posts — building hype the right way.",
-    contact_label: "Contact", contact_title: "Let's Build Something",
-    contact_blurb: "Got a project, release, or event that needs a visual identity? Hit me up. I work with artists, labels, and productions — from the Balkans and beyond."
+    nav_work:"Work",nav_about:"About",nav_services:"Services",nav_contact:"Contact",
+    hero_eyebrow:"Zagreb · Balkan Scene · Underground",
+    hero_sub:"Creative Visuals",hero_sub2:"Edits",hero_sub3:"Design",
+    hero_cta1:"View Work",hero_cta2:"Get In Touch",scroll:"Scroll",
+    work_title:"Selected Work",about_label:"// About me",about_title:"About Me",
+    about_p1:`I work in <strong>graphic design</strong> and love expressing creativity through my work while constantly exploring new ideas. I consider myself a communicative, creative, and responsible person who always looks for ways to improve my skills and grow.`,
+    about_p2:`Although I'm still in the process of learning, I'm a <strong>young enthusiast</strong> motivated to develop across all areas of design and constantly work on myself. I love challenges and opportunities that allow me to learn something new.`,
+    about_p3:`In my free time I listen to <span class="highlight">trap</span> and explore new things that can inspire my work. My goal is to keep growing in the world of design.`,
+    about_p4:`Available to anyone who needs a strong visual identity.`,
+    services_label:"// What I do",services_title:"Services",
+    s1_name:"Event Posters",s1_desc:"Full visual identity for shows, concerts, and events. Bold compositions built to stop thumbs mid-scroll.",
+    s2_name:"Song & Album Covers",s2_desc:"Cover art that matches the energy of the track. Consistent visual identity across EPs and singles.",
+    s3_name:"Artist Branding",s3_desc:"Visual systems for artists — colour coding, typography, recurring motifs that make you recognisable.",
+    s4_name:"Countdown Series",s4_desc:"Consistent pre-release visual campaigns across stories and posts — building hype the right way.",
+    contact_label:"Contact",contact_title:"Let's Build Something",
+    contact_blurb:"Got a project, release, or event that needs a visual identity? Hit me up. I work with artists, labels, and productions — from the Balkans and beyond."
   },
   de: {
-    nav_work: "Arbeiten", nav_about: "Über mich", nav_services: "Leistungen", nav_contact: "Kontakt",
-    hero_eyebrow: "Zagreb · Balkan-Szene · Underground",
-    hero_sub: "Kreative Visuals", hero_sub2: "Edits", hero_sub3: "Design",
-    hero_cta1: "Arbeiten ansehen", hero_cta2: "Kontakt aufnehmen",
-    scroll: "Scrollen",
-    work_title: "Ausgewählte Arbeiten",
-    about_label: "// Über mich", about_title: "Über mich",
-    about_p1: `Ich arbeite im Bereich <strong>Grafikdesign</strong> und liebe es, durch meine Arbeit Kreativität auszudrücken und ständig neue Ideen zu erkunden. Ich halte mich für eine kommunikative, kreative und verantwortungsvolle Person.`,
-    about_p2: `Obwohl ich noch im Lernprozess bin, bin ich eine <strong>junge Enthusiastin</strong>, die motiviert ist, sich in allen Bereichen des Designs weiterzuentwickeln.`,
-    about_p3: `In meiner Freizeit höre ich <span class="highlight">Trap</span> und erkunde neue Dinge, die mich bei meiner Arbeit inspirieren können. Mein Ziel ist es, in der Designwelt weiter zu wachsen.`,
-    about_p4: `Für alle verfügbar, die ein starkes visuelles Konzept brauchen.`,
-    services_label: "// Was ich mache", services_title: "Leistungen",
-    s1_name: "Event-Poster", s1_desc: "Komplette visuelle Identität für Shows, Konzerte und Events. Starke Kompositionen, die den Scroll stoppen.",
-    s2_name: "Song & Album Cover", s2_desc: "Cover-Art, die zur Energie des Tracks passt. Konsistente visuelle Identität über EPs und Singles hinweg.",
-    s3_name: "Artist Branding", s3_desc: "Visuelle Systeme für Künstler — Farbcodes, Typografie und Motive, die dich erkennbar machen.",
-    s4_name: "Foto-Editing", s4_desc: "Dunkle Duotone-Bearbeitungen, Halftone-Texturen, Cutout-Compositing. Rohe Aufnahmen, die anders treffen.",
-    s5_name: "Countdown-Serien", s5_desc: "Konsistente Pre-Release-Kampagnen für Stories und Posts — Hype auf die richtige Art.",
-    contact_label: "Kontakt", contact_title: "Lass uns was aufbauen",
-    contact_blurb: "Du hast ein Projekt, eine Veröffentlichung oder ein Event, das eine visuelle Identität braucht? Meld dich. Ich arbeite mit Künstlern, Labels und Produktionen — aus dem Balkan und darüber hinaus."
+    nav_work:"Arbeiten",nav_about:"Über mich",nav_services:"Leistungen",nav_contact:"Kontakt",
+    hero_eyebrow:"Zagreb · Balkan-Szene · Underground",
+    hero_sub:"Kreative Visuals",hero_sub2:"Edits",hero_sub3:"Design",
+    hero_cta1:"Arbeiten ansehen",hero_cta2:"Kontakt aufnehmen",scroll:"Scrollen",
+    work_title:"Ausgewählte Arbeiten",about_label:"// Über mich",about_title:"Über mich",
+    about_p1:`Ich arbeite im Bereich <strong>Grafikdesign</strong> und liebe es, durch meine Arbeit Kreativität auszudrücken und ständig neue Ideen zu erkunden.`,
+    about_p2:`Obwohl ich noch im Lernprozess bin, bin ich eine <strong>junge Enthusiastin</strong>, die motiviert ist, sich in allen Bereichen des Designs weiterzuentwickeln.`,
+    about_p3:`In meiner Freizeit höre ich <span class="highlight">Trap</span> und erkunde neue Dinge, die mich inspirieren können. Mein Ziel ist es, in der Designwelt weiter zu wachsen.`,
+    about_p4:`Für alle verfügbar, die ein starkes visuelles Konzept brauchen.`,
+    services_label:"// Was ich mache",services_title:"Leistungen",
+    s1_name:"Event-Poster",s1_desc:"Komplette visuelle Identität für Shows, Konzerte und Events. Starke Kompositionen, die den Scroll stoppen.",
+    s2_name:"Song & Album Cover",s2_desc:"Cover-Art, die zur Energie des Tracks passt. Konsistente visuelle Identität über EPs und Singles hinweg.",
+    s3_name:"Artist Branding",s3_desc:"Visuelle Systeme für Künstler — Farbcodes, Typografie und Motive, die dich erkennbar machen.",
+    s4_name:"Countdown-Serien",s4_desc:"Konsistente Pre-Release-Kampagnen für Stories und Posts — Hype auf die richtige Art.",
+    contact_label:"Kontakt",contact_title:"Lass uns was aufbauen",
+    contact_blurb:"Du hast ein Projekt, eine Veröffentlichung oder ein Event? Meld dich. Ich arbeite mit Künstlern, Labels und Produktionen — aus dem Balkan und darüber hinaus."
   }
 };
 
-let currentLang = 'hr';
-function setLang(lang) {
-  currentLang = lang;
-  const t = i18n[lang];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) el.innerHTML = t[key];
+let currentLang='hr';
+function setLang(lang){
+  currentLang=lang;
+  const t=i18n[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(t[key]!==undefined)el.innerHTML=t[key];
   });
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.classList.toggle('active',btn.textContent===lang.toUpperCase());
   });
-  document.documentElement.lang = lang;
+  document.documentElement.lang=lang;
 }
 
-/* ── ZAŠTITA SLIKA ── */
-document.addEventListener('contextmenu', function(e) {
-  if (e.target.tagName === 'IMG') e.preventDefault();
-});
-document.addEventListener('dragstart', function(e) {
-  if (e.target.tagName === 'IMG') e.preventDefault();
-});
+document.addEventListener('contextmenu',e=>{if(e.target.tagName==='IMG')e.preventDefault()});
+document.addEventListener('dragstart',e=>{if(e.target.tagName==='IMG')e.preventDefault()});
 
-/* ── GALERIJA LIGHTBOX ── */
-let aktivneSlike = [];
-let aktivnaImena = [];
-let trenutniIndex = 0;
-
-function pokreniGaleriju(kartica) {
-  aktivneSlike = kartica.getAttribute('data-gallery').split(',');
-  aktivnaImena = kartica.getAttribute('data-names').split(',');
-  trenutniIndex = 0;
-  prikaziSliku(0);
-  document.getElementById('custom-lightbox').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+let aktivneSlike=[],aktivnaImena=[],trenutniIndex=0;
+function pokreniGaleriju(kartica){
+  aktivneSlike=kartica.getAttribute('data-gallery').split(',');
+  aktivnaImena=kartica.getAttribute('data-names').split(',');
+  trenutniIndex=0;prikaziSliku(0);
+  document.getElementById('custom-lightbox').style.display='flex';
+  document.body.style.overflow='hidden';
 }
-
-function prikaziSliku(index) {
-  trenutniIndex = index;
-  document.getElementById('custom-lightbox-img').src = aktivneSlike[index];
-  const nav = document.getElementById('custom-nav-names');
-  nav.innerHTML = '';
-  if (aktivneSlike.length > 1) {
-    aktivnaImena.forEach(function(ime, i) {
-      const btn = document.createElement('button');
-      btn.innerText = ime;
-      btn.className = 'custom-nav-btn' + (i === index ? ' is-active' : '');
-      btn.onclick = function(e) { e.stopPropagation(); prikaziSliku(i); };
+function prikaziSliku(index){
+  trenutniIndex=index;
+  document.getElementById('custom-lightbox-img').src=aktivneSlike[index];
+  const nav=document.getElementById('custom-nav-names');
+  nav.innerHTML='';
+  if(aktivneSlike.length>1){
+    aktivnaImena.forEach((ime,i)=>{
+      const btn=document.createElement('button');
+      btn.innerText=ime;
+      btn.className='custom-nav-btn'+(i===index?' is-active':'');
+      btn.onclick=e=>{e.stopPropagation();prikaziSliku(i)};
       nav.appendChild(btn);
     });
   }
 }
-
-function zatvoriGaleriju() {
-  document.getElementById('custom-lightbox').style.display = 'none';
-  document.body.style.overflow = 'auto';
+function zatvoriGaleriju(){
+  document.getElementById('custom-lightbox').style.display='none';
+  document.body.style.overflow='auto';
 }
-
-document.addEventListener('keydown', function(e) {
-  const lb = document.getElementById('custom-lightbox');
-  if (lb.style.display === 'flex') {
-    if (e.key === 'Escape') zatvoriGaleriju();
-    if (e.key === 'ArrowRight') prikaziSliku((trenutniIndex + 1) % aktivneSlike.length);
-    if (e.key === 'ArrowLeft') prikaziSliku((trenutniIndex - 1 + aktivneSlike.length) % aktivneSlike.length);
+document.addEventListener('keydown',e=>{
+  const lb=document.getElementById('custom-lightbox');
+  if(lb.style.display==='flex'){
+    if(e.key==='Escape')zatvoriGaleriju();
+    if(e.key==='ArrowRight')prikaziSliku((trenutniIndex+1)%aktivneSlike.length);
+    if(e.key==='ArrowLeft')prikaziSliku((trenutniIndex-1+aktivneSlike.length)%aktivneSlike.length);
   }
 });
 
-/* ── CUSTOM CURSOR ── */
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursorRing');
-const dot    = document.getElementById('cursorDot');
-let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  dot.style.left = mouseX + 'px'; dot.style.top = mouseY + 'px';
-});
-(function animate() {
-  ringX += (mouseX - ringX) * 0.12;
-  ringY += (mouseY - ringY) * 0.12;
-  ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
-  requestAnimationFrame(animate);
-})();
-document.querySelectorAll('a,button,.card,.service-card,.nav-menu,.lang-btn').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing'),dot=document.getElementById('cursorDot');
+let mouseX=0,mouseY=0,ringX=0,ringY=0;
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;dot.style.left=mouseX+'px';dot.style.top=mouseY+'px'});
+(function animate(){ringX+=(mouseX-ringX)*.12;ringY+=(mouseY-ringY)*.12;ring.style.left=ringX+'px';ring.style.top=ringY+'px';requestAnimationFrame(animate)})();
+document.querySelectorAll('a,button,.card,.service-card,.nav-menu,.lang-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.classList.add('hovering'));
+  el.addEventListener('mouseleave',()=>cursor.classList.remove('hovering'));
 });
 
-/* ── MOBILE NAV ── */
-function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
-function closeMobile()  { document.getElementById('mobileMenu').classList.remove('open'); }
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('open')}
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open')}
 
-/* ── SCROLL REVEAL ── */
-const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.12 });
-reveals.forEach(r => observer.observe(r));
+const reveals=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}});
+},{threshold:.12});
+reveals.forEach(r=>observer.observe(r));
 
-/* ── PARALLAX HERO ── */
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  const bg = document.querySelector('.hero-bg');
-  if (bg) bg.style.transform = `translateY(${y * 0.35}px)`;
-  const content = document.querySelector('.hero-content');
-  if (content) content.style.transform = `translateY(${y * 0.15}px)`;
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  const bg=document.querySelector('.hero-bg');
+  if(bg)bg.style.transform=`translateY(${y*.35}px)`;
+  const content=document.querySelector('.hero-content');
+  if(content)content.style.transform=`translateY(${y*.15}px)`;
 });
 
-/* ── NAV BG ── */
-const nav = document.querySelector('nav');
-window.addEventListener('scroll', () => {
-  nav.style.background = window.scrollY > 60
-    ? 'rgba(10,10,10,0.97)'
-    : 'linear-gradient(to bottom, rgba(10,10,10,.95) 0%, transparent 100%)';
+const navEl=document.querySelector('nav');
+window.addEventListener('scroll',()=>{
+  navEl.style.background=window.scrollY>60?'rgba(10,10,10,0.97)':'linear-gradient(to bottom,rgba(10,10,10,.95) 0%,transparent 100%)';
 });
 
-/* ── SMOOTH SCROLL ── */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth'})}
   });
 });
 
-/* ── STAGGER CARDS ── */
-document.querySelectorAll('.card').forEach((card, i) => { card.style.transitionDelay = (i * 0.08) + 's'; });
+document.querySelectorAll('.card').forEach((card,i)=>{card.style.transitionDelay=(i*.08)+'s'});
 </script>
 </body>
 </html>
