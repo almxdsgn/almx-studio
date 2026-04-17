@@ -320,6 +320,7 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
 </section>
 
 <!-- ═══ WORK ═══ -->
+<!-- ═══ WORK ═══ -->
 <section id="work">
   <div class="section-header reveal">
     <span class="section-label">// Portfolio</span>
@@ -328,38 +329,12 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </div>
 
   <style>
-    /* Stilovi za gumbe unutar Lightboxa */
-    .custom-nav-container {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .custom-nav-btn {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      font-size: 11px;
-      text-transform: uppercase;
-      padding: 10px 18px;
-      transition: 0.3s;
-      border-radius: 4px;
-      letter-spacing: 1px;
-    }
-    .custom-nav-btn:hover { background: rgba(255, 255, 255, 0.15); }
-    .custom-nav-btn.is-active { 
-      background: #fff;
-      color: #000;
-      font-weight: bold;
-    }
     #custom-lightbox {
       display: none;
       position: fixed;
       z-index: 999999;
       left: 0; top: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.98);
+      background: rgba(0,0,0,0.98);
       align-items: center;
       justify-content: center;
       flex-direction: column;
@@ -374,6 +349,32 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       position: absolute;
       top: 30px; right: 30px;
       color: #fff; font-size: 40px; cursor: pointer;
+      line-height: 1;
+    }
+    .custom-nav-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .custom-nav-btn {
+      color: #fff;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      font-size: 11px;
+      text-transform: uppercase;
+      padding: 10px 18px;
+      transition: 0.3s;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+    .custom-nav-btn:hover { background: rgba(255,255,255,0.15); }
+    .custom-nav-btn.is-active {
+      background: #fff;
+      color: #000;
+      font-weight: bold;
     }
   </style>
 
@@ -417,45 +418,43 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
     </div>
   </div>
 
-  <div id="custom-lightbox" onclick="if(event.target == this) zatvoriGaleriju()">
+  <div id="custom-lightbox" onclick="if(event.target === this) zatvoriGaleriju()">
     <span class="close-custom" onclick="zatvoriGaleriju()">&times;</span>
-    <img id="custom-lightbox-img" src="">
+    <img id="custom-lightbox-img" src="" alt="">
     <div id="custom-nav-names" class="custom-nav-container"></div>
   </div>
 
   <script>
     let aktivneSlike = [];
     let aktivnaImena = [];
-    let trenutniIndexSlike = 0;
+    let trenutniIndex = 0;
 
     function pokreniGaleriju(kartica) {
       aktivneSlike = kartica.getAttribute('data-gallery').split(',');
       aktivnaImena = kartica.getAttribute('data-names').split(',');
-      trenutniIndexSlike = 0;
-      
-      osvjeziPrikazGalerije();
+      trenutniIndex = 0;
+      prikaziSliku(0);
       document.getElementById('custom-lightbox').style.display = 'flex';
       document.body.style.overflow = 'hidden';
     }
 
-    function osvjeziPrikazGalerije() {
-      const imgElement = document.getElementById('custom-lightbox-img');
-      const navElement = document.getElementById('custom-nav-names');
-      
-      imgElement.src = aktivneSlike[trenutniIndexSlike];
-      navElement.innerHTML = '';
+    function prikaziSliku(index) {
+      trenutniIndex = index;
+      document.getElementById('custom-lightbox-img').src = aktivneSlike[index];
+
+      const nav = document.getElementById('custom-nav-names');
+      nav.innerHTML = '';
 
       if (aktivneSlike.length > 1) {
-        aktivnaImena.forEach((ime, i) => {
-          const btn = document.createElement('div');
+        aktivnaImena.forEach(function(ime, i) {
+          const btn = document.createElement('button');
           btn.innerText = ime;
-          btn.className = (i === trenutniIndexSlike) ? 'custom-nav-btn is-active' : 'custom-nav-btn';
-          btn.onclick = (e) => {
+          btn.className = 'custom-nav-btn' + (i === index ? ' is-active' : '');
+          btn.onclick = function(e) {
             e.stopPropagation();
-            trenutniIndexSlike = i;
-            osvjeziPrikazGalerije();
+            prikaziSliku(i);
           };
-          navElement.appendChild(btn);
+          nav.appendChild(btn);
         });
       }
     }
@@ -464,6 +463,14 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       document.getElementById('custom-lightbox').style.display = 'none';
       document.body.style.overflow = 'auto';
     }
+
+    document.addEventListener('keydown', function(e) {
+      if (document.getElementById('custom-lightbox').style.display === 'flex') {
+        if (e.key === 'Escape') zatvoriGaleriju();
+        if (e.key === 'ArrowRight') prikaziSliku((trenutniIndex + 1) % aktivneSlike.length);
+        if (e.key === 'ArrowLeft') prikaziSliku((trenutniIndex - 1 + aktivneSlike.length) % aktivneSlike.length);
+      }
+    });
   </script>
 </section>
 <!-- ═══ CONTACT ═══ -->
