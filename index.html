@@ -379,7 +379,12 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
   </style>
 
   <div class="grid">
-    <div class="card reveal" data-gallery="jacv1.webp,99v1.webp,MAVID.webp,lokki.webp" data-names="JAC,Ruda 99,MAVID,Lokki" onclick="pokreniGaleriju(this)">
+
+    <!-- SBL Series -->
+    <div class="card reveal"
+         data-gallery="jacv1.webp,MAVID.webp,lokki.webp"
+         data-names="JAC,MAVID,Lokki"
+         onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="jacv1.webp">
       <div class="card-overlay">
         <div class="card-tag">// Series</div>
@@ -388,7 +393,11 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       </div>
     </div>
 
-    <div class="card reveal" data-gallery="gocav1.webp,dipsiv1.webp,NIKOLAV1.webp" data-names="Goca,Dipsi,Nikola" onclick="pokreniGaleriju(this)">
+    <!-- Luzeri Series -->
+    <div class="card reveal"
+         data-gallery="gocav1.webp,dipsiv1.webp"
+         data-names="Goca,Dipsi"
+         onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="gocav1.webp">
       <div class="card-overlay">
         <div class="card-tag">// Series</div>
@@ -397,27 +406,75 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       </div>
     </div>
 
-    <div class="card reveal" data-gallery="DRITOIZARENEV1.webp" data-names="Drito iz Arene" onclick="pokreniGaleriju(this)">
+    <!-- Drito iz Arene -->
+    <div class="card reveal"
+         data-gallery="DRITOIZARENEV1.webp"
+         data-names="Drito iz Arene"
+         onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="DRITOIZARENEV1.webp">
-      <div class="card-overlay"><div class="card-title">Drito iz Arene</div></div>
+      <div class="card-overlay">
+        <div class="card-title">Drito iz Arene</div>
+      </div>
     </div>
 
-    <div class="card reveal" data-gallery="SPIROv2.webp" data-names="Špiro" onclick="pokreniGaleriju(this)">
+    <!-- Špiro -->
+    <div class="card reveal"
+         data-gallery="SPIROv2.webp"
+         data-names="Špiro"
+         onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="SPIROv2.webp">
-      <div class="card-overlay"><div class="card-title">Špiro</div></div>
+      <div class="card-overlay">
+        <div class="card-title">Špiro</div>
+      </div>
     </div>
 
-    <div class="card reveal" data-gallery="popkev1.webp" data-names="Popke" onclick="pokreniGaleriju(this)">
+    <!-- Popke -->
+    <div class="card reveal"
+         data-gallery="popkev1.webp"
+         data-names="Popke"
+         onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="popkev1.webp">
-      <div class="card-overlay"><div class="card-title">Popke</div></div>
+      <div class="card-overlay">
+        <div class="card-title">Popke</div>
+      </div>
     </div>
 
-    <div class="card reveal" data-gallery="doktorukuciv2.webp" data-names="Doktorukući" onclick="pokreniGaleriju(this)">
+    <!-- Doktorukući -->
+    <div class="card reveal"
+         data-gallery="doktorukuciv2.webp"
+         data-names="Doktorukući"
+         onclick="pokreniGaleriju(this)">
       <img class="card-bg" src="doktorukuciv2.webp">
-      <div class="card-overlay"><div class="card-title">Doktorukući</div></div>
+      <div class="card-overlay">
+        <div class="card-title">Doktorukući</div>
+      </div>
     </div>
+
+    <!-- Grim Chrome Hearts -->
+    <div class="card reveal"
+         data-gallery="Grim_chromehearts.webp"
+         data-names="Grim Chrome Hearts"
+         onclick="pokreniGaleriju(this)">
+      <img class="card-bg" src="Grim_chromehearts.webp">
+      <div class="card-overlay">
+        <div class="card-title">Grim Chrome Hearts</div>
+      </div>
+    </div>
+
+    <!-- Yung Bude -->
+    <div class="card reveal"
+         data-gallery="BUDEYlogo.webp"
+         data-names="Yung Bude"
+         onclick="pokreniGaleriju(this)">
+      <img class="card-bg" src="BUDEYlogo.webp">
+      <div class="card-overlay">
+        <div class="card-title">Yung Bude</div>
+      </div>
+    </div>
+
   </div>
 
+  <!-- LIGHTBOX -->
   <div id="custom-lightbox" onclick="if(event.target === this) zatvoriGaleriju()">
     <span class="close-custom" onclick="zatvoriGaleriju()">&times;</span>
     <img id="custom-lightbox-img" src="" alt="">
@@ -472,6 +529,7 @@ footer { padding: 40px 48px; background: var(--black2); display: flex; align-ite
       }
     });
   </script>
+
 </section>
 <!-- ═══ CONTACT ═══ -->
 <section id="contact">
